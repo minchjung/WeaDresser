@@ -1,6 +1,9 @@
 const { User } = require("../../models");
 const { generateToken , sendToken } = require('../tokenfunction')
+<<<<<<< HEAD
 const { sendEmailCode } = require('../mailer')
+=======
+>>>>>>> cdc5f98 (Fixed : Token Function with 영한님)
 require("dotenv").config();
 
 module.exports = {
@@ -61,8 +64,14 @@ module.exports = {
     const { id, email } = user.dataValues; 
     const token = generateToken({ id, email });
     sendToken(res, token);
+<<<<<<< HEAD
     return res.json({ email, token }); 
     //! accessToken 을 body에 안줘도 됨 ! 추후 다시 협의 보기
+=======
+
+    //! accessToken 을 body에 안줘도 됨 ! 추후 다시 협의 보기
+    return res.json({ email, token }); 
+>>>>>>> cdc5f98 (Fixed : Token Function with 영한님)
   },
   // *  POST users/signup
   signup: async (req, res) => {
