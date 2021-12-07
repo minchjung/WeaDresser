@@ -32,8 +32,47 @@ function RecordPage() {
         console.log(e.target.value);
     }
 
-    function hashtagFn (e) {
-        setInputHashtag(e.target.value);
+    function hashtagFn (e) { // 해시태그 입력함수
+        if (e.target.value === '') return;
+        else if (inputHashtag.includes(e.target.value)) return;
+        else setInputHashtag([...inputHashtag, `#${e.target.value.split(' ').join('')}`]);
+        e.target.value = '';
+    }
+
+    function removeHashtag (removeIdx) { // 해시태그 삭제함수
+        const newInputHashtag = inputHashtag.filter((a, idx) => {
+            return idx !== removeIdx;
+        });
+        setInputHashtag(newInputHashtag);
+    }
+
+    function isShareCheck () {
+        setSharePost(!sharePost);
+        console.log('받지?', sharePost);
+    }
+
+    function submitFn (e) { // 작성완료 버튼
+        e.preventDefault();
+        const formData = new FormData();
+        // user 정보도 담아서 줘야하지 않을까 window.sesstionStorage.getItem() 
+        // 아니면 server에서 쿠키에 담긴 데이터? // 위 처럼 보내지 않고 server에서 쿠키사용
+        formData.append('weatherData', weatherData);
+        formData.append('image', uploadImage);
+        formData.append('content', inputContent);
+        formData.append('hashtag', inputHashtag);
+        formData.append('share', sharePost);
+
+        // const url = process.env.REACT_APP_SERVER_URL || 
+        const url = 'http://localhost:80/diary' // server랑 확인할때 환경변수 x
+        axios.post(url, formData, { 
+            headers: {
+                'content-type': 'multipart/form-data'
+            }},
+            { withCredential: true 
+        })
+            .then(res => {}) // axios.post면 res를 보내 줄 필요가 없는지?
+            .catch(err => {console.log(err)});
+            // history -> diary페이지 -> 다시 get요청 (가장 최신 글)
     }
 
     return (
