@@ -20,6 +20,8 @@ import { isShowLoginModalHandler } from './redux/actions/actions';
 import styled from 'styled-components';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import RecordPage from './pages/RecordPage/RecordPage'
+import axios from 'axios';
+
 require('dotenv').config();
 
 function App() {
