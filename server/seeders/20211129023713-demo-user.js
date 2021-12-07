@@ -55,7 +55,7 @@ module.exports = {
           tempMax: 12.0,
           tempMin: 0.1, 
           userId: uData[ranUser-1].id,
-          share:false,
+          share:(ranUser % 2),
         }
 
         // Likes random obj dadt 
