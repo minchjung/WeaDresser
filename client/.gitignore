@@ -29,11 +29,9 @@ yar.lock
 /package-lock.json 
 
 #github 
-./.github
+/.github
 
 #pem
 /cert.pem
 /key.pem
-
 /*.pem 
-*.pem
