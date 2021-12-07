@@ -9,7 +9,6 @@ module.exports = {
 
   sendToken: (res, token) => {
     res.cookie("Bearer", token, {
-<<<<<<< HEAD
       httpOnly: true,
       sameSite: "none",
       secure: true,
@@ -18,30 +17,16 @@ module.exports = {
       path: "/",
       ovewrite: true,
       // signed : true
-=======
       path: "/",
-      httpOnly: true, //!cors option 나중에 보기 
->>>>>>> cdc5f98 (Fixed : Token Function with 영한님)
+      ovewrite: true,
+      // signed : true
     });
-    // res.cookie("Login", "true", {
-    //   httpOnly: true,
-    //   sameSite: "none",
-    //   secure: true,
-    //   maxAge: 60 * 60 * 24 * 1000,
-    //   domain: "localhost",
-    //   path: "/",
-    //   ovewrite: true,
-    //   signed : true
-    // });
   },
 
   isAuthorized: (req) => {
 
     const cookieToken = req.cookies.Bearer;
-<<<<<<< HEAD
     console.log(req.cookies.Bearer)
-=======
->>>>>>> cdc5f98 (Fixed : Token Function with 영한님)
     if (!cookieToken) return null;
     try {
       return verify(cookieToken, process.env.ACCESS_SECRET);

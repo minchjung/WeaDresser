@@ -23,12 +23,15 @@ app.use(express.urlencoded({ extended: false }));
 // );
 app.use(cookieParser());
 app.use(
+  session({
+    secret: "saltkey",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+app.use(
   cors({
-<<<<<<< HEAD
     origin: 'https://localhost:3000', 
-=======
-    origin: true ,
->>>>>>> cdc5f98 (Fixed : Token Function with 영한님)
     credentials: true,
     methods: ["GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"],
   })
