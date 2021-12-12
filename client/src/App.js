@@ -40,6 +40,9 @@ function App() {
           <Route path = '/record'><RecordPage/></Route>
         </Switch>
         <Modal/>
+        {/* <OotdImageBox/> */}
+        {/* <DiaryPage /> */}
+        <Footer/>
       </div>
     </BrowserRouter>
   );
