@@ -6,30 +6,10 @@ import { LoginContainer,LogoContainer,InputContainer,LoginError,LoginBtnContaine
 // import { isShowLoginModalHandler, isShowSignUpModalHandler} from '../../../redux/actions/actions'
 require('dotenv').config();
 
-<<<<<<< HEAD
-function Login({ modalChangeHandler }){
-  const [ loginInfo, setLoginInfo ] = useState({ email: "", password: "" });
-  // const [ errorMessage, setErrorMessage ] = useState("");
-  const { isShowLoginModal, isShowSignUpModal } = useSelector(state => state.isShowModalReducer)
-  const { getGoogleAccToken, getKakaoCode, handleUserLoginApi, errorMessage, setErrorMessage } = useLoginApi();
-  // const history= useHistory();
-
-  // Translate animation (Signin)
-  const displayLogin = useSpring({
-    transform: isShowLoginModal ? 'translateY(0%)' : 'translateY(100%)',
-    opacity : isShowLoginModal ? 1 : 0 
-  });
-  // Translate animation (Signup)
-  const displaySignup = useSpring({
-    transform: isShowSignUpModal ? 'translateX(0%)' : 'translateX(100%)', 
-    opacity : isShowSignUpModal ? 1 : 0 
-  })
-=======
 function Login({ closeModalByBtn, displayLogin, modalChangeHandler }){
   const [ loginInfo, setLoginInfo ] = useState({ email: "", password: "" });
   const { getGoogleAccToken, getKakaoCode, validCheckHandler, 
     errorMessage, setErrorMessage, active, setActive,  } = useLoginApi();
->>>>>>> f3dcdc5 (Refactor: Modal, Sifnup, SigmForm, useForm, useSlider)
 
   // inputvalue save to the loginInfo States
   const handleInputValue = (key) => (e) => {
