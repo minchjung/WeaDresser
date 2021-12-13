@@ -111,40 +111,6 @@ function Login({ modalChangeHandler }){
       }
     })
   }
-<<<<<<< HEAD
-  const googleLoginHandler = () => {
-    getGoogleAccToken()
-  }
-  const kakaoLoginHandler = () => {
-    getKakaoCode()
-  }
-  return (
-    <>
-      <LogoContainer><img alter="" src={title}/></LogoContainer>
-      <InputContainer>
-        <input 
-          className="login-input"
-          type="email"
-          placeholder="Email"
-          onChange={ handleInputValue("email") }
-          onKeyUp={ handleKeyPress }
-          />
-        <input 
-          className="login-input"
-          type="password"
-          placeholder="비밀번호"
-          onChange={ handleInputValue("password") }
-          onKeyUp={ handleKeyPress }
-          />
-          <LoginError>{errorMessage}</LoginError>
-      </InputContainer>
-      <LoginBtnContainer>
-        <button onClick={validCheckHandler}  className={`login-btn${active}`}> 로그인</button>
-        <button onClick={modalChangeHandler} className='singup-btn'>회원가입</button>
-        <button onClick={kakaoLoginHandler} className='kakao-btn'>Kakao</button>
-        <button onClick={googleLoginHandler} className='google-btn'>Google</button>
-      </LoginBtnContainer>
-=======
   const modalChangeHandler = () => {
     dispatch(isShowSignUpModalHandler(true));
   }
@@ -182,7 +148,6 @@ function Login({ modalChangeHandler }){
         <CloseModalButton onClick={closeModalByBtn}/>
       </LoginContainer>
       }
->>>>>>> 9a03a35 (Fixed: google auth login - sesssion 처리)
     </>
   );
 }
