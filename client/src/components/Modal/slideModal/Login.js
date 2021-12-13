@@ -99,6 +99,7 @@ function Login({ modalChangeHandler }){
   const userLoginHandler = async () => {
     const{ email, password } = loginInfo;
     handleUserLoginApi({ email, password})
+<<<<<<< HEAD
     //! server uri dotenv 안될때가 있어요!
 <<<<<<< HEAD
     const SERVER = process.env.REACT_APP_SERVER_URI || 'http://localhost:80'
@@ -129,6 +130,9 @@ function Login({ modalChangeHandler }){
     })
 =======
 >>>>>>> 82ce65e (ADD: sessionStorage check to redirect)
+=======
+    //! server uri dotenv 안될때 있음!
+>>>>>>> b1e5e83 (ADD: dot env 유의 사항 주석 on login.js)
   }
   const modalChangeHandler = () => {
     dispatch(isShowSignUpModalHandler(true));
