@@ -14,11 +14,17 @@ import { CloseModalButton } from "./ModalStyle";
 // import { getGoogleAccToken, getKakaoCode } 
 // from '../../../api/social'
 
-import { useLoginApi} from '../../../api/useLoginApi'
+import { useLoginApi} from '../../../utils/api/useLoginApi'
 
 import { isShowLoginModalHandler, isShowSignUpModalHandler, loginSuccessHandler } 
 >>>>>>> e9a8da3 (ADD: LoginAPi custom hook , Refactor: kakao social login)
 from '../../../redux/actions/actions'
+<<<<<<< HEAD
+=======
+import { useSpring } from 'react-spring'
+import { useForm } from "../../../utils/useForm";
+require('dotenv').config();
+>>>>>>> 27cfe2c (Fixd: api moved to utils directory)
 
 function Login({ modalChangeHandler }){
   const [ loginInfo, setLoginInfo ] = useState({ email: "", password: "" });
