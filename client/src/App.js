@@ -21,9 +21,10 @@ import {SolidHeart} from "./components/SvgIcon/SvgIcon"
 import Modal from "./components/Modal/slideModal/Modal"
 // import RecordPage from './pages/RecordPage/RecordPage';
 import MyPage from './pages/MyPage/MyPage'
-// import { isShowLoginModalHandler } from './redux/actions/actions';
+import { loginSuccessHandler } from './redux/actions/actions';
 // import styled from 'styled-components';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+<<<<<<< HEAD
 import RecordPage from './pages/RecordPage/RecordPage'
 import axios from 'axios';
 require('dotenv').config();
@@ -38,6 +39,22 @@ function App() {
   // } = useSelector(state => state.isShowModalReducer);
   // const dispatch = useDispatch();
 >>>>>>> 82ce65e (ADD: sessionStorage check to redirect)
+=======
+import RecordPage from './pages/RecordPage/RecordPage';
+import DiaryPage from './pages/MyPage/DiaryPage';
+import Footer from './components/Footer/Footer'
+import { useEffect } from 'react';
+require('dotenv').config();
+
+function App() {
+  const { accessToken } = useSelector(state => state.isLoginReducer)
+  const dispatch = useDispatch();
+  const loginHandler = bool => dispatch(loginSuccessHandler(bool, accessToken));
+  
+  useEffect( ()=> {
+    if(sessionStorage.getItem('isLogin')) loginHandler(true)
+  }, [])
+>>>>>>> ed0f6dd (ADD: useEffect to set login true on App.js)
 
   return (
     <BrowserRouter>
