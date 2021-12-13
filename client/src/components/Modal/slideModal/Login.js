@@ -5,9 +5,19 @@ import axios from 'axios';
 import title from './title.svg'
 import { LogoContainer,InputContainer,LoginError,LoginBtnContainer } 
 from './LoginStyle';
+<<<<<<< HEAD
 import { getGoogleAccToken, getKakaoCode } 
 from '../../../api/social'
 import { isShowLoginModalHandler, loginSuccessHandler } 
+=======
+import { CloseModalButton } from "./ModalStyle";
+// import { getGoogleAccToken, getKakaoCode } 
+// from '../../../api/social'
+
+import { useLoginApi} from '../../../api/useLoginApi'
+
+import { isShowLoginModalHandler, isShowSignUpModalHandler, loginSuccessHandler } 
+>>>>>>> e9a8da3 (ADD: LoginAPi custom hook , Refactor: kakao social login)
 from '../../../redux/actions/actions'
 
 function Login({ modalChangeHandler }){
@@ -17,6 +27,7 @@ function Login({ modalChangeHandler }){
   const history= useHistory();
   const { pattern } = useForm();
   const dispatch = useDispatch(); 
+  const { getGoogleAccToken, getKakaoCode } = useLoginApi();
 
   // Translate animation (Signin)
   const props = useSpring({
@@ -66,9 +77,9 @@ function Login({ modalChangeHandler }){
   // GET User info by request to 80 Server
   const userLoginHandler = async () => {
     const{ email, password } = loginInfo;
-    //! server uri
-    const SERVER = process.env.REACT_APP_SERVER_URI 
-    || `http://localhost:80`
+    //! server uri dotenv 안될때가 있어요!
+    const SERVER = process.env.REACT_APP_SERVER_URI || 'http://localhost:80'
+    console.log(" 요청 간다.", SERVER)
     axios.post(
       'http://localhost:80/users/signin',
       { email, password },
