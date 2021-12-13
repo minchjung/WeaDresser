@@ -1,7 +1,12 @@
 import React, { useState } from "react";
+<<<<<<< HEAD
 import { useHistory} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
+=======
+import { useDispatch, useSelector } from 'react-redux';
+import Signup from "./Signup";
+>>>>>>> 82ce65e (ADD: sessionStorage check to redirect)
 import title from './title.svg'
 import { LogoContainer,InputContainer,LoginError,LoginBtnContainer } 
 from './LoginStyle';
@@ -13,14 +18,17 @@ import { isShowLoginModalHandler, loginSuccessHandler }
 import { CloseModalButton } from "./ModalStyle";
 // import { getGoogleAccToken, getKakaoCode } 
 // from '../../../api/social'
-
 import { useLoginApi} from '../../../utils/api/useLoginApi'
+<<<<<<< HEAD
 
 import { isShowLoginModalHandler, isShowSignUpModalHandler, loginSuccessHandler } 
 >>>>>>> e9a8da3 (ADD: LoginAPi custom hook , Refactor: kakao social login)
 from '../../../redux/actions/actions'
 <<<<<<< HEAD
 =======
+=======
+import { isShowSignUpModalHandler} from '../../../redux/actions/actions'
+>>>>>>> 82ce65e (ADD: sessionStorage check to redirect)
 import { useSpring } from 'react-spring'
 import { useForm } from "../../../utils/useForm";
 require('dotenv').config();
@@ -28,12 +36,18 @@ require('dotenv').config();
 
 function Login({ modalChangeHandler }){
   const [ loginInfo, setLoginInfo ] = useState({ email: "", password: "" });
+<<<<<<< HEAD
   const [ errorMessage, setErrorMessage ] = useState("");
-  const [ active, setActive ] = useState("");
-  const history= useHistory();
-  const { pattern } = useForm();
+=======
+  // const [ errorMessage, setErrorMessage ] = useState("");
+  const { isShowLoginModal, isShowSignUpModal } = useSelector(state => state.isShowModalReducer)
   const dispatch = useDispatch(); 
-  const { getGoogleAccToken, getKakaoCode } = useLoginApi();
+
+>>>>>>> 82ce65e (ADD: sessionStorage check to redirect)
+  const [ active, setActive ] = useState("");
+  // const history= useHistory();
+  const { pattern } = useForm();
+  const { getGoogleAccToken, getKakaoCode, handleUserLoginApi, errorMessage, setErrorMessage } = useLoginApi();
 
   // Translate animation (Signin)
   const props = useSpring({
@@ -80,10 +94,13 @@ function Login({ modalChangeHandler }){
     }
         
   };
-  // GET User info by request to 80 Server
+
+  // * 일반 유저 로그인 done ! 
   const userLoginHandler = async () => {
     const{ email, password } = loginInfo;
+    handleUserLoginApi({ email, password})
     //! server uri dotenv 안될때가 있어요!
+<<<<<<< HEAD
     const SERVER = process.env.REACT_APP_SERVER_URI || 'http://localhost:80'
     console.log(" 요청 간다.", SERVER)
     axios.post(
@@ -110,6 +127,8 @@ function Login({ modalChangeHandler }){
         setErrorMessage("앗! 서버 error가 낫어요!")
       }
     })
+=======
+>>>>>>> 82ce65e (ADD: sessionStorage check to redirect)
   }
   const modalChangeHandler = () => {
     dispatch(isShowSignUpModalHandler(true));
@@ -121,7 +140,7 @@ function Login({ modalChangeHandler }){
       </LoginContainer>
       :
       <LoginContainer style={props}>
-        <LogoContainer><img alter="" src={title}/></LogoContainer>
+        <LogoContainer><img alt="Weadresser" src={title}/></LogoContainer>
         <InputContainer>
           <input 
             className="login-input"
