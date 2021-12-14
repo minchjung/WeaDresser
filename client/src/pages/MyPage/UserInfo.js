@@ -22,8 +22,9 @@ import CheckMsg from "../../components/utils/checkMsg"
 import {conditionPassword} from "../../utils/validator"
 import CheckSignMsg from '../../components/utils/checkMsg';
 import InfoUpdateModal from '../../components/Modal/InfoUpdateModal'
-
-
+import WithDrawalBtn from '../../components/WithDrawal/WithDrawalBtn'
+import WithDrawalModal from '../../components/WithDrawal/WithDrawalModal'
+import SocialCant from '../../components/Modal/SocialCant'
 
 function UserInfo(){
     const [curUserPw, setCurUserPw] = useState('');
@@ -33,12 +34,13 @@ function UserInfo(){
     const [fixUserName, setFixUserName] = useState('')
     const [sucUpdate, setSucUpdate] = useState(true);
     const [showUpdateModal, setShowUpdateModal] = useState(null);
-    const [buttonDisabled, setButtonDisabled] = useState(true)
-
+    const [buttonDisabled, setButtonDisabled] = useState(true);
+    const [showWithDrawal, setShowWithDrawal] = useState(Boolean);
     const [validPw, setValidPw] = useState(false); // 유효성(문자, 숫자, 특수문자 각 하나씩)
     const [samePw, setSamePw] = useState(false); // 비번 확인용
 
     const userData =  useSelector(state => state.isLoginReducer.accessToken)
+    let social
 
     useEffect(() => {
         console.log("useEffect get request")
@@ -47,6 +49,7 @@ function UserInfo(){
         // console.log(userData)
         axios.get('http://localhost:80/mypage/users', {withCredentials: true})
             .then(res => {
+                social = res.data.social
                 setCurUserNickname(res.data.data.userName)
             })
             .catch(err => {
@@ -101,7 +104,9 @@ function UserInfo(){
 
     function updateInfoRequest(e){ // -------------업데이트 요청----------------
         e.preventDefault()
-        axios.patch(`${process.env.REACT_APP_SERVER_URL}/mypage/users`, {withCredentials : true})
+        const userData2 = {userName: fixUserName, editPassword: updatePw, password: curUserPw}
+
+        axios.patch('http://localhost:80/mypage/users',userData2,{withCredentials : true})
             .then(res => {
                 console.log('유저 정보 업데이트 성공')
                 setSucUpdate(true)
@@ -118,8 +123,8 @@ function UserInfo(){
         <UserInfoBackground>
             <UserInfoContainer>
                 <UserInfoHeader>
-                    <h2>{curUserNickname}님</h2>
-                    <div>회원탈퇴</div>
+                    <h2><span className="user-info-name">{curUserNickname}</span>님</h2>
+                    <WithDrawalBtn setShowWithDrawal={setShowWithDrawal}/>
                 </UserInfoHeader>
                 <UserInfoUpdate>
                     <UserInfoForm onSubmit={(e) => updateInfoRequest(e)}>
@@ -142,14 +147,21 @@ function UserInfo(){
                             <UserInfoChkPassword onChange={(e) => checkChagePwInfo(e)}/>
                         </UserInfoBox>
                         {!samePw ? <CheckSignMsg message={'비밀번호가 일치하지 않습니다.'} /> : null}
-                        <UserInfoSubmitBtn disabled={buttonDisabled}>
+                        <hr/>
+                        <UserInfoBox>
+                            <div className="user-info-arrange"></div>
+                            <UserInfoSubmitBtn disabled={buttonDisabled}>
                             변경하기
-                        </UserInfoSubmitBtn>
+                            </UserInfoSubmitBtn>
+                        </UserInfoBox>
                     </UserInfoForm>
                 </UserInfoUpdate>
                 <UserInfoSnsLogined></UserInfoSnsLogined>
                 {showUpdateModal ? <InfoUpdateModal setShowUpdateModal={setShowUpdateModal} showUpdateModal={showUpdateModal} sucUpdate={sucUpdate} /> : null}
             </UserInfoContainer>
+            {showUpdateModal ? <InfoUpdateModal setShowUpdateModal={setShowUpdateModal} showUpdateModal={showUpdateModal} sucUpdate={sucUpdate} /> : null}
+            {showWithDrawal ? <WithDrawalModal setShowWithDrawal={setShowWithDrawal} /> : null}
+            {social ? <SocialCant /> : null}
         </UserInfoBackground>
     )
 
