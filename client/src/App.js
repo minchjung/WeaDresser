@@ -75,9 +75,13 @@ function App() {
           <Route path = '/record'><RecordPage/></Route>
         </Switch>
         <Modal/>
+<<<<<<< HEAD
         {/* <OotdImageBox/> */}
         {/* <DiaryPage /> */}
         <Footer/>
+=======
+        {/* <DiaryPage /> */}
+>>>>>>> a852411 ([feat] landing page 하단 작성 및 nav-header 수정)
       </div>
     </BrowserRouter>
   );

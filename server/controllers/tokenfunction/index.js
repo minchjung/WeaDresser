@@ -1,3 +1,4 @@
+const { User } = require("../../models");
 require("dotenv").config();
 const { sign, verify } = require("jsonwebtoken");
 
@@ -36,4 +37,15 @@ module.exports = {
       return null;
     }
   },
+
+  isValid: (email, id) => {
+    const validUser = User.findOne({where: {email: email, id: id}})
+    try{
+      return validUser;
+    }
+    catch(err) {
+      return false;
+    }
+    
+  }
 };
