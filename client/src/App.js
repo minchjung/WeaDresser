@@ -44,6 +44,7 @@ import RecordPage from './pages/RecordPage/RecordPage';
 import DiaryPage from './pages/MyPage/DiaryPage';
 import Footer from './components/Footer/Footer'
 import { useCallback, useEffect } from 'react';
+import axios from 'axios';
 require('dotenv').config();
 
 function App() {
@@ -62,10 +63,22 @@ function App() {
   }, [loginStateHandler])
 >>>>>>> dd00edd (Fix: modal folder name changed to SignModal from SliderModal)
 
+  const logoutHandler = () => {
+    const SERVER = process.env.REACT_APP_SERVER_URL || "http://localhost:80"
+    axios.post(SERVER + "/users/signout")
+      .then( result => {
+        dispatch(loginSuccessHandler(false, ""))
+        sessionStorage.removeItem('isLogin')
+      })
+      .catch( err => {
+        console.log(err) // err handler
+      })
+  }
+
   return (
     <BrowserRouter>
       <div className="App">
-        <NavBar />
+        <NavBar logoutHandler={logoutHandler}/>
         <SideBar />
         {/* <UserInfo/> */}
         <Switch>

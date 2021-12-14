@@ -95,6 +95,10 @@ module.exports = {
 
   // *  POST users/signout
   signout: (req, res) => {
-    return res.send("POST /users/signout OK");
+    console.log("its comming now")
+
+    res.clearCookie('Bearer', { domain: "localhost" ,path: "/",});
+    // res.clearCookie('Bearer', { domain: "localhost" });
+    return res.status(205).send('Logged out successfully') 
   },
 };
