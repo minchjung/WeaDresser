@@ -1,11 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, 
-    RecordContainer, 
+    PageHeader,
+    RecordIcon,
+    RecordContainer,
+    RecordForm,
     ImageUploadBox, 
     ContentBox, 
     UploadButton,
-    HashtagBox
+    HashtagBox,
+    ShareBox,
+    CancelButton,
 } from './RecordPageStyle';
 
 function RecordPage() {
@@ -14,9 +19,14 @@ function RecordPage() {
     const inputValue = useRef(null);
     const [uploadImage, setUploadImage] = useState(null);
     const [inputContent, setInputContent] = useState('');
-    const [inputHashtag, setInputHashtag] = useState('');
+    const [inputHashtag, setInputHashtag] = useState("구찌갱, 국밥문신충");
+    const [previewImage, setPreviewImage] = useState(null);
+    const [sharePost, setSharePost] = useState(true);
+    const [canSubmit, setCanSubmit] = useState(false);
+    const weatherData = useSelector(state => state.getWeatherDataReducer);
 
-    function inputFileHandler (inputValue, setUploadImage) {
+    function inputFileHandler (inputValue) {
+        
         const image = inputValue.current.files;
         setUploadImage(image[0]);
         console.log('rererere', inputValue)
@@ -34,15 +44,19 @@ function RecordPage() {
 
     function hashtagFn (e) { // 해시태그 입력함수
         if (e.target.value === '') return;
-        else if (inputHashtag.includes(e.target.value)) return;
-        else setInputHashtag([...inputHashtag, `#${e.target.value.split(' ').join('')}`]);
+        else if (inputHashtag.split(', ').includes(e.target.value)) return;
+        // else if (inputHashtag.length > 10) return;
+        else {
+            const trimmedHashtag = e.target.value.split('').filter(el => el !== '#').filter(el2 => el2 !== ' ').join('');
+            setInputHashtag(inputHashtag+ ', ' + trimmedHashtag);
+        }
         e.target.value = '';
     }
 
-    function removeHashtag (removeIdx) { // 해시태그 삭제함수
-        const newInputHashtag = inputHashtag.filter((a, idx) => {
-            return idx !== removeIdx;
-        });
+    function removeHashtag (removeTag) { // 해시태그 삭제함수
+        const newInputHashtag = inputHashtag.split(', ').filter((el) => {
+            return el !== removeTag;
+        }).join(', ');
         setInputHashtag(newInputHashtag);
     }
 
@@ -51,30 +65,34 @@ function RecordPage() {
         console.log('받지?', sharePost);
     }
 
+    // console.log({weatherData, uploadImage, inputContent, inputHashtag, sharePost},  'formData@@@')
+
+    const formData = new FormData(); // submitbutton이랑 cancelbutton이랑 둘다 활용
     function submitFn (e) { // 작성완료 버튼
-        // user 정보도 담아서 줘야하지 않을까 window.sesstionStorage.getItem() 
-        // 아니면 server에서 쿠키에 담긴 데이터? // 위 처럼 보내지 않고 server에서 쿠키사용
+
         formData.append('weatherData', weatherData);
         formData.append('image', uploadImage);
         formData.append('content', inputContent);
         formData.append('hashtag', inputHashtag);
         formData.append('share', sharePost);
-
+        
         // const url = process.env.REACT_APP_SERVER_URL || 
         const url = 'http://localhost:80/diary' // server랑 확인할때 환경변수 x
         axios.post(url, formData, { 
             headers: {
                 'content-type': 'multipart/form-data'
             }},
-            { withCredential: true 
+            { 
+                withCredential: true,
         })
-            .then(res => {console.log('submit successfully')}) // axios.post면 res를 보내 줄 필요가 없는지?
-            .catch(err => {console.log(err)});
+            .then(res => console.log('submit successfully')) // axios.post면 res를 보내 줄 필요가 없는지?
+            .catch(err => console.log(err));
             // history -> diary페이지 -> 다시 get요청 (가장 최신 글)
         history.push('/mypage/diary');
-    }
 
-    function cancleFn (e) {
+        // 마지막에 formData를 초기화 안해줘도 되는지?
+    }
+    function cancelFn (e) {
         // formData 초기화
         formData.delete('weatherData');
         formData.delete('image');
@@ -83,44 +101,65 @@ function RecordPage() {
         formData.delete('share');
         history.push('/');
     }
-
+    
     return (
         <Container>
             <RecordContainer>
-                 <div className="content">
-                    <div className="content-head">글 작성</div>
-                    <ContentBox value={inputContent} onChange={(e) => contentFn(e)} placeholder="글 작성 되는곳 .."></ContentBox>
-                    <HashtagBox value={inputHashtag} onChange={(e) => hashtagFn(e)} placeholder="해시태그.."></HashtagBox>
-                </div>
-                <div className="content">
-                    <div className="content-head">이미지 업로드</div>
-                    <ImageUploadBox>
-                        <input 
-                            name="image" 
-                            className="input-blind" 
-                            ref={inputValue} 
-                            type="file"
-                            onChange={(e) => inputFileHandler(inputValue, setUploadImage)} 
-                        />
-                        {
-                            uploadImage ? 
-                            <div 
-                                className="img-preview" 
-                                onClick={(e) => inputBtn(e, inputValue)} 
-                                style={{ backgroundImage: `url('${URL.createObjectURL(uploadImage)}')`}}
-                            >
-                            </div> 
-                            :
-                            <div 
-                                className="img-preview" 
-                                onClick={(e) => inputBtn(e, inputValue)}
-                            >
-                                <div className="photo-logo"></div>
-                            </div>
-                        }
-                    </ImageUploadBox>
-                    <UploadButton><div>작성완료</div></UploadButton>
-                </div>
+                <RecordForm onSubmit={(e) => submitFn(e)}>
+                    <div className="content-left">
+                        <div className="content-head">글 작성</div>
+                        <ContentBox value={inputContent} onChange={(e) => contentFn(e)} placeholder="글을 작성해주세요."></ContentBox>
+                        <HashtagBox value={inputHashtag} >
+                            {inputHashtag.split(', ').map((hashtag) => (
+                                <li className='hashtag' key={hashtag}>
+                                    <span>{`#${hashtag}`}</span>
+                                    <span className="close-button" onClick={() => removeHashtag(hashtag)}></span>
+                                </li>
+                            ))}
+                            {
+                                inputHashtag.length > 0 ? 
+                                <input className="input-tag" onKeyUp={(e) => e.key === "Enter" ? hashtagFn(e) : null}></input>
+                                : <input className="input-tag" onKeyUp={(e) => e.key === "Enter" ? hashtagFn(e) : null} placeholder="해시태그를 입력해주세요. (예 : 버버리트렌치코트)"></input>
+                            }
+                        </HashtagBox>
+                        <ShareBox>
+                            {
+                                sharePost ? 
+                                <div className="share-check-true" onClick={isShareCheck}></div>
+                                :
+                                <div className="share-check-false" onClick={isShareCheck}></div>
+                            }
+                            <div className="share-desc">공유하기</div>
+                        </ShareBox>
+                    </div>
+                    <div className="content-right">
+                        <div className="content-head">이미지 업로드</div>
+                        <ImageUploadBox uploadImage={uploadImage}>
+                            <input 
+                                name="image" 
+                                className="input-blind" 
+                                ref={inputValue} 
+                                type="file"
+                                onChange={(e) => inputFileHandler(inputValue)} 
+                            />
+                            {
+                                uploadImage ? 
+                                <div 
+                                    className="img-preview" onClick={(e) => inputBtn(e, inputValue)} 
+                                    style={{ backgroundImage: `url(${previewImage})`}}
+                                >
+                                </div>
+                                :
+                                <div className="img-preview" onClick={(e) => inputBtn(e, inputValue)}>
+                                    <div className="photo-logo"></div>
+                                    <div className="upload-desc">클릭하여 이미지를 추가하세요.</div>
+                                </div>
+                            }
+                        </ImageUploadBox>
+                        <UploadButton canSubmit={canSubmit} disabled={!canSubmit}>작성완료</UploadButton>
+                        <CancelButton onClick={cancelFn}>작성취소</CancelButton>
+                    </div>
+                </RecordForm>
             </RecordContainer>
         </Container>
     )
