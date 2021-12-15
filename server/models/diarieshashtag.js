@@ -2,18 +2,36 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class DiariesHashtag extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+
     static associate(models) {
-      // define association here
+      models.Diarie.belongsToMany(models.Hashtag, { through : DiariesHashtag , onDelete: 'CASCADE', })
+      models.Hashtag.belongsToMany(models.Diarie, { through : DiariesHashtag,  onDelete: 'CASCADE', })
     }
   }
+
   DiariesHashtag.init(
-    { },
     {
+      DiarieId: {
+        type: DataTypes.INTEGER,
+        references:{
+          model : 'Diarie',
+          key : 'id',
+        }
+      },
+      HashtagId :{
+        type: DataTypes.INTEGER,
+        references:{
+          model : 'Hashtag',
+          key : 'id',
+        }
+      },
+      // granted : { 
+      //   type : DataTypes.BOOLEAN,
+      //   defaultValue : true,
+      // }
+    },
+    {
+      // freezeTableName : true,
       timestamps: false,
       sequelize,
       modelName: "DiariesHashtag",
