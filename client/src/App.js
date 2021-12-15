@@ -22,7 +22,6 @@ import { isLoadingHandler, loginSuccessHandler } from './redux/actions/actions';
 // import styled from 'styled-components';
 import { BrowserRouter, Route, Switch, useHistory } from 'react-router-dom';
 import RecordPage from './pages/RecordPage/RecordPage';
-import DiaryPage from './pages/MyPage/DiaryPage';
 import Footer from './components/Footer/Footer'
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
@@ -49,7 +48,6 @@ function App() {
           <Route path = '/record'><RecordPage /></Route>
         </Switch>
         <Modal/>
-        {/* <DiaryPage /> */}
       </div>
       {/* <Footer/> */}
     </BrowserRouter>

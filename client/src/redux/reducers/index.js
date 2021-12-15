@@ -127,7 +127,7 @@ function getRecordDataReducer(state = initialState.getRecordData, action) {
     case MYPAGE_RECORD_DATA:
       return Object.assign({}, {
         getRecordData: action.payload.data
-      })
+      });
     default: return state;
   }
 }

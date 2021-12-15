@@ -41,6 +41,6 @@ export const initialState = {
         getDateData: null
     },
     getRecordData: {
-        getRecordData: null
+        getRecordData: null,
     }
 }
