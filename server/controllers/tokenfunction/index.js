@@ -13,7 +13,7 @@ module.exports = {
       httpOnly: true,
       sameSite: "none",
       secure: true,
-      // maxAge: 60 * 60 * 24 * 1000,
+      maxAge: 60 * 60 * 24 * 1000,
       // domain: "localhost",
       // path: "/",
       // ovewrite: true,
@@ -27,7 +27,11 @@ module.exports = {
   isAuthorized: (req) => {
 
     const cookieToken = req.cookies.Bearer;
+<<<<<<< HEAD
     console.log(req.cookies.Bearer)
+=======
+    console.log("asdfasdf", req.cookies)
+>>>>>>> b2eb2a6 (before getting pair merge)
     if (!cookieToken) return null;
     try {
       return verify(cookieToken, process.env.ACCESS_SECRET);
