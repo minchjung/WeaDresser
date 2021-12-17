@@ -3,7 +3,7 @@ const { Diarie, sequelize, User, Like, Hashtag, DiariesHashtag  } = require('../
 module.exports = {
   up: async (queryInterface, Sequelize) => {
 
-    const diary = await Diarie.findByPk(7, { model : Hashtag, through : DiariesHashtag })
+    const diary = await Diarie.findByPk(1010, { model : Hashtag, through : DiariesHashtag })
     const hashs = await diary.getHashtags({ raw : true, nest : true })
     console.log(hashs)
   },
