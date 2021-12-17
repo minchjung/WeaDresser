@@ -75,8 +75,16 @@ function EditRecord({ curSlide, setCurSlide, setIsEdit, fetchedDiary, }) {
         formData.append('share', sharePost); 
         formData.append('diaryId', diaryId);
         // const url = process.env.REACT_APP_SERVER_URL || 
+<<<<<<< HEAD
         const url = `http://localhost:80/mypage/diary` // server랑 확인할때 환경변수 x
         axios.patch(url, formData, { withCredentials: true})
+=======
+        const url = 'http://localhost:80/mypage/diary' // server랑 확인할때 환경변수 x
+        axios.post('http://localhost:80/mypage/diary', formData, { 
+            headers: {
+                'content-type': 'multipart/form-data'
+            }, withCredentials: true })
+>>>>>>> 067bd6c (before merge)
             .then(res => console.log('edit successfully'))
             .catch(err => console.log(err))
 
