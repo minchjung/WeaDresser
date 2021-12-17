@@ -3,6 +3,7 @@ const { Diarie, Hashtag, DiariesHashtag, sequelize } = require('../models')
 module.exports = {
   // * POST  /diary 
   create : async (req, res) => {
+<<<<<<< HEAD
     // // token validation
     const result = isAuthorized(req); 
     if(!result) return res.status(401).send("Unauthorized");
@@ -19,11 +20,28 @@ module.exports = {
 
     const{ content,image, weather, tempMin, tempMax, temp, hashtag , share } = req.body;
     if(!weather || !tempMin|| !tempMax || !image,
+=======
+    // token validation
+    const result = isAuthorized(req); 
+    if(!result) return res.status(401).send("Unauthorized");
+
+    // user validation 
+    const foundUser = await isValid(result.email, result.id);
+    if(!foundUser) return res.status(401).send("Unauthorized");
+
+    
+    // req.body validation 
+    const{ userId, content, weather, image, tempMin, tempMax, temp, hashtag , share } = req.body;
+    console.log({ content, weather, image, tempMin, tempMax, temp, hashtag , share }, 'body@@@')
+    if( !content || !weather || 
+      !tempMin|| !tempMax || !temp ||  
+>>>>>>> 9d6f215 (before merge)
       share === undefined || share === null || share === ''){
         return res.status(400).send("Bad request")
     }
 
     // Make hashtag array with name properties 
+<<<<<<< HEAD
     const hashArr = hashtag.split(', ').filter(ele => ele !== "" )
     const tagData = hashArr.map( ele => { return { name : ele } })
     
@@ -34,6 +52,10 @@ module.exports = {
     // console.log("hashtag =============",hashArr)
     // console.log("hashtag =============",tagData)
     // console.log("req.body ===========", req.body)
+=======
+    let hashArr = hashtag || [] ;
+    const tagData = hashArr.split(', ').map( ele => { return { name : ele } })
+>>>>>>> 9d6f215 (before merge)
     const data = req.body;
     delete data.hashtag 
     
