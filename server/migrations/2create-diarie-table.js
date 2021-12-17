@@ -16,8 +16,19 @@ module.exports = {
         type: DataTypes.STRING,
       },
       userId : {
+<<<<<<< HEAD
         // allowNull: false,
         type: DataTypes.INTEGER,
+=======
+        type: DataTypes.INTEGER,
+        //   allowNull: false,
+          references:{
+            model : 'Users',
+            key : 'id',
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+          },
+>>>>>>> b828c8c (merge after)
       },
       weather: {
         allowNull: false,
@@ -54,6 +65,6 @@ module.exports = {
   },
   down: async (queryInterface, DataTypes) => {
     await queryInterface.dropTable("Diaries");
-    return queryInterface.dropTable('DiariesHashtags')
+    // return queryInterface.dropTable('DiariesHashtags')
   },
 };
