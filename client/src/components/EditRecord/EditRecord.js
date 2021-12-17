@@ -75,10 +75,7 @@ function EditRecord({ curSlide, setIsEdit }) {
 
         // const url = process.env.REACT_APP_SERVER_URL || 
         const url = 'http://localhost:80/mypage/diary' // server랑 확인할때 환경변수 x
-        axios.post('http://localhost:80/mypage/diary', formData, { 
-            headers: {
-                'content-type': 'multipart/form-data'
-            }, withCredentials: true })
+        axios.patch(url, formData, { withCredentials: true})
             .then(res => console.log('edit successfully'))
             .catch(err => console.log(err))
 
