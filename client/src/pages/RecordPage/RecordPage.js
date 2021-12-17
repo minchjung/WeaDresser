@@ -35,8 +35,6 @@ function RecordPage() {
     const [canSubmit, setCanSubmit] = useState(false);
     const [showCancel, setShowCancel] = useState(false);
 
-    console.log('record', weatherData);
-
     function inputFileHandler (inputValue) {
         
         const image = inputValue.current.files;
@@ -77,20 +75,16 @@ function RecordPage() {
         setInputHashtag(newInputHashtag);
     }
     function isShareCheck (e) {
-        // e.preventDefault();
         setSharePost(!sharePost);
         console.log('받지?', sharePost);
     }
     function showCancelModalFn (e) {
-        // e.preventDefault();
         setShowCancel(true);
     }
 
     const formData = new FormData(); // submitbutton이랑 cancelbutton이랑 둘다 활용
     function submitFn (e) { // 작성완료 버튼
-        console.log(curTemp)
         e.preventDefault();
-        console.log('work???')
         formData.append('image', uploadImage);
         formData.append('content', inputContent);
         formData.append('hashtag', inputHashtag);
