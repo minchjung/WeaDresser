@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { getWeatherData } from '../../redux/actions/actions';
 import {
@@ -20,6 +20,8 @@ function LandingPage () {
 
     const [curWeather, setCurWeather] = useState(null);
     const [curIcon, setCurIcon] = useState(null);
+    const scrollRef = useRef(null);
+    // const [dayNight, setDayNight] = useState('day');
     const dispatch = useDispatch();
     const weatherData = useSelector(state => state.getWeatherDataReducer); // redux-thunk 다시 보기
     console.log('날씨!',weatherData);
@@ -55,7 +57,7 @@ function LandingPage () {
             askForCoords();
             complete = true;
         }
-        
+
     }, []);
 
     useEffect(() => {
@@ -81,9 +83,13 @@ function LandingPage () {
         }
     }, [weatherData]);
 
+    function MoveToDown () {
+        // scrollRef.current.style.tranform = "translateY(100%)"
+        window.scrollTo({top: 1180, behavior:'smooth'})
+    }
     return (
         <>
-            <Container>
+            <Container ref={scrollRef}>
                  <LandingPageContainer>
                     <MainLogo></MainLogo>
                     <WeatherIconBox>
@@ -115,7 +121,7 @@ function LandingPage () {
                         </>
                     }
                     </WeahterBarBox>
-                    <Scroll />
+                    <Scroll onClick={MoveToDown} />
                 </LandingPageContainer>
             </Container>
             <LandingPageLower />
