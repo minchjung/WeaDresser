@@ -3,43 +3,32 @@ const { Diarie, Hashtag, DiariesHashtag, sequelize } = require('../models')
 module.exports = {
   // * POST  /diary 
   create : async (req, res) => {
-    // // token validation
+    // token validation
     const result = isAuthorized(req); 
     if(!result) return res.status(401).send("Unauthorized");
 
-    // // user validation 
+    // user validation 
     const foundUser = await isValid(result.email, result.id);
     if(!foundUser) return res.status(401).send("Unauthorized");
-    console.log('------------------------')
-    console.log(result)
-    console.log('------------------------')
-
     
     // req.body validation 
-
     const{ content,image, weather, tempMin, tempMax, temp, hashtag , share } = req.body;
     if(!weather || !tempMin|| !tempMax || !image,
       share === undefined || share === null || share === ''){
         return res.status(400).send("Bad request")
     }
 
-    // Make hashtag array with name properties 
+    // Make tagData array to bulkCreate with name properties 
+    //(hashArr to check only name property)
     const hashArr = hashtag.split(', ').filter(ele => ele !== "" )
     const tagData = hashArr.map( ele => { return { name : ele } })
-    
+  
+    // Make data to create Diary
     req.body.userId = foundUser.id;
     req.body.image = req.file.location
-
-    // console.log("hashtag =============",hashtag)
-    // console.log("hashtag =============",hashArr)
-    // console.log("hashtag =============",tagData)
-    // console.log("req.body ===========", req.body)
     const data = req.body;
     delete data.hashtag 
     
-    // console.log("data =============", data);
-    // console.log("tagdata =========== ", tagData);
-
     // transaction start 
     try{ // Diari Create => Hashtags bulkCreate => Diarie <-> Hashtag bulkUpdate  
       const result = await sequelize.transaction( async t => { 
