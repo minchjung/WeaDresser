@@ -105,6 +105,7 @@ module.exports = {
     // user validation 
     const foundUser = await isValid(token.email, token.id);
     if(!foundUser) return res.status(401).send("Unauthorized");
+<<<<<<< HEAD
     console.log('======================', req.body)
     //! req.body validation 협의 
 <<<<<<< HEAD
@@ -112,13 +113,29 @@ module.exports = {
     // const hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
     let { diaryId, content, share, hashtag, image } = req.body;
     if(!diaryId || !content || !req.body.location) return res.status(400).send("Bad request")
+=======
+   
+    // console.log("=========", req.body)
+    // console.log("=========", req.file)
+    // req.body validation 
+    const { diaryId, content, share } = req.body;
+    if(!diaryId) return res.status(400).send("Bad request")
+>>>>>>> 62ccd36 ([modify] sidebar 일부 수정, edit요청 수정)
     if( share === null  || share === undefined ) return res.status(400).send("Bad request")
-    hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
-    if (!req.file) {
-      image = req.file.location;
+
+    // data setting to bulkInsert
+    console.log(req.body,'^^^^^^^^^^^^^^^^^^^^^^^')
+    console.log(req.file, 'ffffffffffff')
+    let data = req.body 
+    data.hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(','); 
+    if (req.file !== undefined) {
+      data.image  = req.file.location;
     } else {
-      image = req.body.image;
+      data.image  = req.body.image;
     }
+    data.content = req.body.content || "";
+
+    // console.log(req.body)
 
 =======
     req.body.image = req.file.location
@@ -146,14 +163,16 @@ module.exports = {
           transaction : t
         }) // Not found any (server down)
         if(!diary) return res.status(400).send("Bad request");
+        data.CreatedAt = diary.CreatedAt
 
         await Hashtag.bulkCreate( // create bulk hash first => findAll tags
-          hashtag.map(ele => { return {name :ele} }), 
+          data.hashtag.map(ele => { return {name :ele} }), 
           { through : DiariesHashtag, ignoreDuplicates : true, transaction : t }  
         )
-        const foundTags = await Hashtag.findAll({ where : { name : hashtag }, transaction : t }) 
+        const foundTags = await Hashtag.findAll({ where : { name : data.hashtag }, transaction : t }) 
+        
         // update each values => save 
-        await diary.set(req.body, { transaction : t });
+        await diary.set(data, { transaction : t });
         await diary.setHashtags(foundTags, { transaction : t })
         await diary.save({transaction : t });
         const edited_diary = await Diarie.findOne({ where : { id : diaryId}, include : { model : Hashtag, through : DiariesHashtag }, transaction : t});

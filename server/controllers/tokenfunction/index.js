@@ -14,6 +14,13 @@ module.exports = {
 
   isAuthorized: (req) => {
 
+<<<<<<< HEAD
+=======
+    const cookieToken = req.cookies.Bearer;
+    if (!cookieToken) return null;
+    try {
+      return verify(cookieToken, process.env.ACCESS_SECRET);
+>>>>>>> 62ccd36 ([modify] sidebar 일부 수정, edit요청 수정)
 
   },
 
