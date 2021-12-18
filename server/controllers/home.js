@@ -27,6 +27,7 @@ module.exports = {
         let ranData = RanOne.dataValues
         const hashtag = ranData.Hashtags.map(hash => hash.dataValues.name).join(', ')
 
+<<<<<<< HEAD
         ranData.hashtag = hashtag
         ranData.userName = ranData.User.dataValues.userName
         delete ranData.Hashtags
@@ -56,6 +57,29 @@ module.exports = {
 
         // console.log(topData)
         return res.json([ranData, topData])
+=======
+    const randomQuery = findRandomOne(tempMin, tempMax);
+    const topQuery = findTopLikeOne(tempMin, tempMax);
+   
+    return sequelize.query( randomQuery, { raw : true })
+      .then( async randomFound => {
+        // random one found OK
+        if(randomFound[0].length > 0){
+          const topOne = await sequelize.query( topQuery, { raw : true })
+          console.log(randomFound[0][0], topOne[0][0])
+          return topOne[0].length > 0 // most like found OK
+            ? res.status(200).json([ randomFound[0][0], topOne[0][0] ])
+            : res.status(201).json([ randomFound[0][0], null ]) 
+            //! DB no data (미리 넣을거라 가능성 희박) BUT 협의
+        }        
+        else{ // !no random => nodata ? x
+          const topOne = await sequelize.query( topQuery, { raw : true })
+          return topOne[0].length > 0
+          ? res.status(202).json([ null, topOne[0][0] ])
+          : res.status(404).json([ null, null ]) 
+          //! DB no data (미리 넣을거라 가능성 희박) BUT 협의
+        }
+>>>>>>> f3e3020 (Fixed: query diariesId, hastagsId => 단수)
       })
     }
     catch(err) { 
