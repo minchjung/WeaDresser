@@ -107,6 +107,7 @@ module.exports = {
     if(!foundUser) return res.status(401).send("Unauthorized");
     console.log('======================', req.body)
     //! req.body validation 협의 
+<<<<<<< HEAD
     // const hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
     let { diaryId, content, share, hashtag, image } = req.body;
     if(!diaryId || !content || !req.body.location) return res.status(400).send("Bad request")
@@ -118,6 +119,14 @@ module.exports = {
       image = req.body.image;
     }
 
+=======
+    req.body.image = req.file.location
+    const hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
+    const { diaryId, content, image, share, } = req.body;
+    if(!diaryId || !content || !image) return res.status(400).send("Bad request")
+    if( share === null  || share === undefined ) return res.status(400).send("Bad request")
+    
+>>>>>>> 6bc04a4 (delete : myapge2)
     // transaction start
     try{ // find diary => 
       await sequelize.transaction( async t => { 
