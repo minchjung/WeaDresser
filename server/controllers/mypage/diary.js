@@ -106,6 +106,7 @@ module.exports = {
     const foundUser = await isValid(token.email, token.id);
     if(!foundUser) return res.status(401).send("Unauthorized");
 <<<<<<< HEAD
+<<<<<<< HEAD
     console.log('======================', req.body)
     //! req.body validation 협의 
 <<<<<<< HEAD
@@ -114,11 +115,14 @@ module.exports = {
     let { diaryId, content, share, hashtag, image } = req.body;
     if(!diaryId || !content || !req.body.location) return res.status(400).send("Bad request")
 =======
+=======
+>>>>>>> 24a12b7 (Fix: landing page server payload, and patch diary)
    
     // console.log("=========", req.body)
     // console.log("=========", req.file)
     // req.body validation 
     const { diaryId, content, share } = req.body;
+<<<<<<< HEAD
     if(!diaryId) return res.status(400).send("Bad request")
 >>>>>>> 62ccd36 ([modify] sidebar 일부 수정, edit요청 수정)
     if( share === null  || share === undefined ) return res.status(400).send("Bad request")
@@ -149,9 +153,18 @@ module.exports = {
     // const hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
     const { diaryId, content, share, hashtag, image } = req.body;
     if(!diaryId || !content || !req.body.location) return res.status(400).send("Bad request")
+=======
+    if(!diaryId || !req.file) return res.status(400).send("Bad request")
+>>>>>>> 24a12b7 (Fix: landing page server payload, and patch diary)
     if( share === null  || share === undefined ) return res.status(400).send("Bad request")
-    hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
-    image = req.file.location 
+
+    // data setting to bulkInsert
+    let data = req.body 
+    data.hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(','); 
+    data.image = req.file.location
+    data.content = req.body.content || ""
+
+    // console.log(req.body)
 
 >>>>>>> 2fc6ffe (Fix:  mypage/diary-patch image when null giving 400 bad req)
     // transaction start

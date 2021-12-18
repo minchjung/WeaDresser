@@ -4,19 +4,21 @@ module.exports = {
   // * POST  /diary 
   create : async (req, res) => {
 <<<<<<< HEAD
+<<<<<<< HEAD
     // // token validation
+=======
+    // token validation
+>>>>>>> 24a12b7 (Fix: landing page server payload, and patch diary)
     const result = isAuthorized(req); 
     if(!result) return res.status(401).send("Unauthorized");
 
-    // // user validation 
+    // user validation 
     const foundUser = await isValid(result.email, result.id);
     if(!foundUser) return res.status(401).send("Unauthorized");
-    // console.log(result)
 
-    
     // req.body validation 
-
     const{ content,image, weather, tempMin, tempMax, temp, hashtag , share } = req.body;
+<<<<<<< HEAD
     if(!weather || !tempMin|| !tempMax || !image,
 =======
     // token validation
@@ -34,6 +36,9 @@ module.exports = {
     if( !content || !weather || 
       !tempMin|| !tempMax || !temp ||  
 >>>>>>> 9d6f215 (before merge)
+=======
+    if(!weather || !tempMin|| !tempMax || !image, !req.file.location ||
+>>>>>>> 24a12b7 (Fix: landing page server payload, and patch diary)
       share === undefined || share === null || share === ''){
         return res.status(400).send("Bad request")
     }
@@ -46,6 +51,7 @@ module.exports = {
     req.body.userId = foundUser.id;
     req.body.image = req.file.location
 
+<<<<<<< HEAD
     // console.log("hashtag =============",hashtag)
     // console.log("hashtag =============",hashArr)
     // console.log("hashtag =============",tagData)
@@ -54,11 +60,10 @@ module.exports = {
     let hashArr = hashtag || [] ;
     const tagData = hashArr.split(', ').map( ele => { return { name : ele } })
 >>>>>>> 9d6f215 (before merge)
+=======
+>>>>>>> 24a12b7 (Fix: landing page server payload, and patch diary)
     const data = req.body;
     delete data.hashtag 
-    
-    // console.log("data =============", data);
-    // console.log("tagdata =========== ", tagData);
 
     // transaction start 
     try{ // Diari Create => Hashtags bulkCreate => Diarie <-> Hashtag bulkUpdate  
