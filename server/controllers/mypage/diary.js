@@ -30,24 +30,27 @@ module.exports = {
         raw:true
       },
       order : [['createdAt', 'DESC']], 
-     raw: true, nest : true
+      raw: true, nest : true
     })
     
     // console.log(diary)
     let diaryArrCheck = { id : 0 , data : [] }
     for(let i = 0 ; i < diary.length ; i++){
-      const hashVal = diary[i].Hashtags.name || ""
+      const hashVal = diary[i].Hashtags.name 
       delete diary[i].Hashtags
       if( diaryArrCheck.id !== diary[i].id ){
         diaryArrCheck.id = diary[i].id
-        diary[i].hashtag = [ hashVal ]
+        diary[i].hashtag = hashVal ? [ hashVal ] : []
         diaryArrCheck.data.push(diary[i])
       }
       else{
-        diaryArrCheck.data[diaryArrCheck.data.length -1 ].hashtag.push( hashVal )
+        hashVal 
+        ? diaryArrCheck.data[diaryArrCheck.data.length -1 ].hashtag.push( hashVal )
+        : null
         // diary[i-1].hashtag.push(!diary[i].Hashtags.name ? "" : diary[i].Hashtags.name)
       }
     }
+
     console.log(diaryArrCheck.data)
       return res.json(diaryArrCheck.data)
     }
@@ -105,7 +108,9 @@ module.exports = {
     if(!foundUser) return res.status(401).send("Unauthorized");
 
     //! req.body validation 협의 
-    const { diaryId, content, image, share, hashtag } = req.body;
+    image = req.file.locatoin;
+    const hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
+    const { diaryId, content, image, share } = req.body;
     if(!diaryId || !content || !image) return res.status(400).send("Bad request")
     if( share === null  || share === undefined ) return res.status(400).send("Bad request")
     
@@ -150,7 +155,7 @@ module.exports = {
     if(!foundUser) return res.status(401).send("Unauthorized");
 
     // req.body validation 
-    const { diaryId } = req.body;
+    const { diaryId } = req.query;
     if(!diaryId) return res.status(400).send("Bad request")
     console.log(req.body)
 

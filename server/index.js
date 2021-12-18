@@ -43,25 +43,5 @@ app.get("/check", (req, res) => {
   res.send("check point success");
 });
 
-// sequelize.sync({ force: false, alter: true }) // <- sequelize init 필요 ! (보류)
-// let credentials ; // "여기에 AWS 키"
-// let server;
-// if(credentials){
-// server = https.createServer(credentials, app);
-// server.listen(port, () =>  console.log("httpSSS server running"))
-// }
-// else{
 
-let server;
-if(fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")){
-
-  const privateKey = fs.readFileSync(__dirname + "/key.pem", "utf8");
-  const certificate = fs.readFileSync(__dirname + "/cert.pem", "utf8");
-  const credentials = { key: privateKey, cert: certificate };
-
-  server = https.createServer(credentials, app);
-  server.listen(PORT, () => console.log("httpss server runnning"));
-
-} else {
-  server = app.listen(PORT, () => console.log("http server running"))
-}
+app.listen(PORT, () => console.log("http server running"))

@@ -48,7 +48,7 @@ function DiaryPage() {
     // const selectedRecordData = useSelector(state => state.getRecordDataReducer);
     // console.log(selectedRecordData.getRecordData);
     // const dateData = useSelector(state => state.getDateDataReducer); // props로 전달해서상태 없데이트
-
+    console.log(fetchedDiary)
     useEffect(() => { // 더미 데이터 확인용
         dispatch(recordDataHandler(fetchedDiary));
     }, []);
@@ -165,12 +165,15 @@ function DiaryPage() {
             .then(res => {console.log('delete successfully');})
             .catch(err => {console.log(err);})
     }
+    const handleDateChange = (datenow) => {
+        setCurDate(datenow)
+    }
 
     return (
         <TabBody>
             <DateDataBar>
-                <div>
-                    <DatePicker curDate={curDate} setCurDate={setCurDate} />
+                <div >
+                    <DatePicker onChange={handleDateChange} curDate={curDate} setCurDate={setCurDate} />
                 </div>
                 <div>
                     <WeatherIcon icon={weatherIcon}></WeatherIcon>
@@ -187,7 +190,7 @@ function DiaryPage() {
             </DateDataBar>
             <RecordContainer isEdit={isEdit}>
                 {
-                    isEdit ? <EditRecord formId={"record"} curSlide={curSlide} setIsEdit={setIsEdit} />
+                    isEdit ? <EditRecord fetchedDiary={fetchedDiary} setFetchedDiary={setFetchedDiary} formId={"record"} curSlide={curSlide} setIsEdit={setIsEdit} />
                     :
                     <SlideContainer >
                         <OutBox ref={imgSlideRef}>

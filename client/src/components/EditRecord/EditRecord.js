@@ -7,7 +7,7 @@ import close from '../../images/close_ic.png';
 import check from '../../images/check_ic_sel.svg';
 import axios from 'axios';
 
-function EditRecord({ curSlide, setIsEdit }) {
+function EditRecord({ curSlide, setIsEdit, fetchedDiary , setFetchedDiary }) {
 
     const { handleSubmit } = useForm();
     const history = useHistory();
@@ -19,6 +19,8 @@ function EditRecord({ curSlide, setIsEdit }) {
     const [sharePost, setSharePost] = useState(true);
     const inputValue = useRef(null);
     const initImage = selectedRecord.getRecordData.record[curSlide].image; // 초기 이미지 값
+
+
 
     function inputFileHandler (inputValue) {
         const image = inputValue.current.files;
