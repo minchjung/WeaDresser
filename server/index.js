@@ -38,6 +38,20 @@ app.get("/check", (req, res) => {
   res.send("check point success");
 });
 
+<<<<<<< HEAD
 
 
 server = app.listen(PORT, () => console.log("http server running"))
+=======
+// sequelize.sync({ force: false, alter: true }) // <- sequelize init 필요 ! (보류)
+// let credentials ; // "여기에 AWS 키"
+// let server;
+// if(credentials){
+// server = https.createServer(credentials, app);
+// server.listen(port, () =>  console.log("httpSSS server running"))
+// }
+// else{
+
+
+app.listen(PORT, () => console.log("http server running"))
+>>>>>>> 5d740ba (ADD: Seed files for img and all images)
