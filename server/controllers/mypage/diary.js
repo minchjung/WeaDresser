@@ -108,6 +108,7 @@ module.exports = {
     console.log('======================', req.body)
     //! req.body validation 협의 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // const hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
     let { diaryId, content, share, hashtag, image } = req.body;
     if(!diaryId || !content || !req.body.location) return res.status(400).send("Bad request")
@@ -127,6 +128,15 @@ module.exports = {
     if( share === null  || share === undefined ) return res.status(400).send("Bad request")
     
 >>>>>>> 6bc04a4 (delete : myapge2)
+=======
+    // const hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
+    const { diaryId, content, share, hashtag, image } = req.body;
+    if(!diaryId || !content || !req.body.location) return res.status(400).send("Bad request")
+    if( share === null  || share === undefined ) return res.status(400).send("Bad request")
+    hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
+    image = req.body.location 
+
+>>>>>>> 2fc6ffe (Fix:  mypage/diary-patch image when null giving 400 bad req)
     // transaction start
     try{ // find diary => 
       await sequelize.transaction( async t => { 
