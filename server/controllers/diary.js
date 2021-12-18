@@ -11,9 +11,7 @@ module.exports = {
     // // user validation 
     const foundUser = await isValid(result.email, result.id);
     if(!foundUser) return res.status(401).send("Unauthorized");
-    console.log('------------------------')
-    console.log(result)
-    console.log('------------------------')
+    // console.log(result)
 
     
     // req.body validation 

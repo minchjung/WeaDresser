@@ -11,7 +11,11 @@ module.exports = {
         // find random diary 
         const RanOne = await Diarie.findOne({
           where : { 
+<<<<<<< HEAD
             temp : { [Op.between] : [ tempMin -5, tempMax + 5 ] },
+=======
+            temp : { [Op.between] : [ tempMin -10, tempMax + 10 ] },
+>>>>>>> 255394d ( Fixed : server landing home page idary data logic all changed by sequelize)
             share : true,
           },
           include : [ 
@@ -28,6 +32,9 @@ module.exports = {
         const hashtag = ranData.Hashtags.map(hash => hash.dataValues.name).join(', ')
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 255394d ( Fixed : server landing home page idary data logic all changed by sequelize)
         ranData.hashtag = hashtag
         ranData.userName = ranData.User.dataValues.userName
         delete ranData.Hashtags
@@ -36,7 +43,11 @@ module.exports = {
         // get Most like diary with username
         const TopOne = await Diarie.findOne({
           where : { 
+<<<<<<< HEAD
             temp : { [Op.between] : [ tempMin -5, tempMax + 5 ] },
+=======
+            temp : { [Op.between] : [ tempMin -10, tempMax + 10 ] },
+>>>>>>> 255394d ( Fixed : server landing home page idary data logic all changed by sequelize)
             share : true,
           },
           include : [ 
@@ -57,6 +68,7 @@ module.exports = {
 
         // console.log(topData)
         return res.json([ranData, topData])
+<<<<<<< HEAD
 =======
     const randomQuery = findRandomOne(tempMin, tempMax);
     const topQuery = findTopLikeOne(tempMin, tempMax);
@@ -80,6 +92,8 @@ module.exports = {
           //! DB no data (미리 넣을거라 가능성 희박) BUT 협의
         }
 >>>>>>> f3e3020 (Fixed: query diariesId, hastagsId => 단수)
+=======
+>>>>>>> 255394d ( Fixed : server landing home page idary data logic all changed by sequelize)
       })
     }
     catch(err) { 
@@ -104,7 +118,11 @@ module.exports = {
         const userId = validUser.id
         const TopOne = await Diarie.findOne({
           where : { 
+<<<<<<< HEAD
             temp : { [Op.between] : [ tempMin -5, tempMax + 5 ] },
+=======
+            temp : { [Op.between] : [ tempMin -10, tempMax + 10 ] },
+>>>>>>> 255394d ( Fixed : server landing home page idary data logic all changed by sequelize)
             share : true,
           },
           include : [ 
@@ -119,7 +137,11 @@ module.exports = {
         // like condition for current user on found diary                
         let topData = TopOne.dataValues
         topData.hashtag = topData.Hashtags.map(hash => hash.dataValues.name).join(', ')
+<<<<<<< HEAD
         topData.likeWhether = await Like.findOne({ where : 
+=======
+        topData.likeWether = await Like.findOne({ where : 
+>>>>>>> 255394d ( Fixed : server landing home page idary data logic all changed by sequelize)
           { diarieId : TopOne.id, userId : userId},
           transaction : t
         }) ? 1 : 0 
@@ -134,7 +156,11 @@ module.exports = {
         const UserOne = await Diarie.findOne({
           where : {
             id : userId, 
+<<<<<<< HEAD
             temp : { [Op.between] : [ tempMin -5, tempMax + 5 ] },
+=======
+            temp : { [Op.between] : [ tempMin -10, tempMax + 10 ] },
+>>>>>>> 255394d ( Fixed : server landing home page idary data logic all changed by sequelize)
             share : true,
           },
           include : [ 
@@ -151,7 +177,11 @@ module.exports = {
         // like condition for current user on found diary                
           userData = UserOne.dataValues
           userData.hashtag = userData.Hashtags.map(hash => hash.dataValues.name).join(', ')
+<<<<<<< HEAD
           userData.likeWhether = await Like.findOne({ where : 
+=======
+          userData.likeWether = await Like.findOne({ where : 
+>>>>>>> 255394d ( Fixed : server landing home page idary data logic all changed by sequelize)
             { diarieId : UserOne.id, userId : userId},
             transaction : t
           }) ? 1 : 0 
@@ -161,7 +191,11 @@ module.exports = {
         // find random diary 
           const RanOne = await Diarie.findOne({
             where : { 
+<<<<<<< HEAD
               temp : { [Op.between] : [ tempMin -5, tempMax + 5 ] },
+=======
+              temp : { [Op.between] : [ tempMin -10, tempMax + 10 ] },
+>>>>>>> 255394d ( Fixed : server landing home page idary data logic all changed by sequelize)
               share : true,
             },
             include : [ 
@@ -175,7 +209,11 @@ module.exports = {
           })
           // like condition for current user on found diary                
           userData = RanOne.dataValues
+<<<<<<< HEAD
           userData.likeWhether = await Like.findOne({ where : { 
+=======
+          userData.likeWether = await Like.findOne({ where : { 
+>>>>>>> 255394d ( Fixed : server landing home page idary data logic all changed by sequelize)
             diarieId : RanOne.id, userId : userId
           },
           transaction : t
