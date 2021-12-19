@@ -47,8 +47,16 @@ module.exports = {
       return res.status(401).send("not authorized");
     }
     if (userName && !editPassword) {
+<<<<<<< HEAD
       result = await User.update({
         userName: userName,
+=======
+      // console.log(userName)
+      result = await User.update({userName: userName},{
+        where: {
+          email: accessTokenData.email,
+        }
+>>>>>>> 491efa4 (Fixed : Sign,in,up,out = server url, redirect-url, changed)
       }).catch((err) => {
         console.log(err);
       });

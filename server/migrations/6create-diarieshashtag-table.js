@@ -2,7 +2,7 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, DataTypes) => {
-    return  queryInterface.createTable('Diarieshashtags', {
+    return  queryInterface.createTable('DiariesHashtags', {
       diarieId :{
         type : DataTypes.INTEGER,
         references:{
@@ -23,10 +23,10 @@ module.exports = {
       }
     })
     .then( () => 
-      queryInterface.addIndex('Diarieshashtags', ['diarieId','hashtagId'], { unique : true })
+      queryInterface.addIndex('DiariesHashtags', ['diarieId','hashtagId'], { unique : true })
     )
   },
   down: async (queryInterface, DataTypes) => {
-    return queryInterface.dropTable('Diarieshashtags');
+    return queryInterface.dropTable('DiariesHashtags');
   }
 };

@@ -21,7 +21,7 @@ app.use(
 );
 app.use(
   cors({
-    origin: ['https://localhost:3000'],
+    origin: ['https://localhost:3000', 'https://wwww.weadresser.ml','https://weadresser.ml'],
     // origin : true, 
     credentials: true,
     methods: ["GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"],
@@ -39,6 +39,7 @@ app.get("/check", (req, res) => {
 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 server = app.listen(PORT, () => console.log("http server running"))
@@ -52,6 +53,8 @@ server = app.listen(PORT, () => console.log("http server running"))
 // }
 // else{
 
+=======
+>>>>>>> 491efa4 (Fixed : Sign,in,up,out = server url, redirect-url, changed)
 
 app.listen(PORT, () => console.log("http server running"))
 >>>>>>> 5d740ba (ADD: Seed files for img and all images)
