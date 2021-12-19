@@ -26,7 +26,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ['https://localhost:3000'],
+    origin: ['https://localhost:3000', 'https://wwww.weadresser.ml','https://weadresser.ml'],
     // origin : true, 
     credentials: true,
     methods: ["GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"],
@@ -42,15 +42,6 @@ app.get("/", (req, res) => {
 app.get("/check", (req, res) => {
   res.send("check point success");
 });
-
-// sequelize.sync({ force: false, alter: true }) // <- sequelize init 필요 ! (보류)
-// let credentials ; // "여기에 AWS 키"
-// let server;
-// if(credentials){
-// server = https.createServer(credentials, app);
-// server.listen(port, () =>  console.log("httpSSS server running"))
-// }
-// else{
 
 
 app.listen(PORT, () => console.log("http server running"))
