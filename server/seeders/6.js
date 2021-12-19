@@ -11,7 +11,7 @@ module.exports = {
     }
     
     const hashLen = 37
-    const diaryLen = 488;
+    const diaryLen = 486;
 
     for(let d = 1 ; d < (hashLen*diaryLen)/2; d++){
       let checkDiary = new Array(diaryLen + 1).fill(false);
