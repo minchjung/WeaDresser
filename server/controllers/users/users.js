@@ -25,15 +25,9 @@ module.exports = {
     const code = Math.floor(Math.random() * (1000000 - 100000) + 100000);
     sendEmailCode(res, email,code)
       ? res.status(200).json({ code : code })
-      : res.status(403).send("failed to send email")
+      : res.status(500).send("failed to send email")
   },
 
-  // *  GET users/email?:code
-  sendEmail: (req, res) => {
-    const { email } = req.params;
-    console.log("ok it works", req.params);
-
-  },
 
   // *  POST users/signin
   signin: async (req, res) => {
@@ -94,7 +88,7 @@ module.exports = {
 
   // *  POST users/signout
   signout: (req, res) => {
-    console.log("its comming now")
+    // console.log("its comming now")
 
     // res.clearCookie('Bearer', { domain: "localhost" });
     res.clearCookie("Bearer", {

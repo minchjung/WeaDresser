@@ -68,10 +68,8 @@ module.exports = {
 
   // * GET  /?tempMax={}&tempMin={}  
   findById : async (req, res) => {
-    console.log("====================================================여기가 endpoint 2")
     // validation 
     const { tempMax, tempMin }= req.query
-    console.log('======================================================',tempMax, tempMin)
     const userInfo = isAuthorized(req);
     const validUser = await isValid(userInfo.email, userInfo.id);
     if(!validUser){
@@ -125,7 +123,6 @@ module.exports = {
           nest : true,
           transaction : t
         })
-        // console.log("dsafadfasdfasdfasdf=================================================================")              
 
         // if user has diary on that condition where temperature in between tempMin, Max
         if(UserOne){ 
@@ -169,8 +166,6 @@ module.exports = {
         delete userData.Hashtags
         delete userData.User
         
-        // console.log(topData)
-        console.log('endpoint2=======================',userData, topData)
         return res.json([userData, topData])
       })
     }
