@@ -9,7 +9,30 @@ module.exports = {
   },
 
   sendToken: (res, token) => {
+<<<<<<< HEAD
  
+=======
+    res.cookie("Bearer", token, {
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+      maxAge: 60 * 60 * 24 * 1000,
+      // domain: "localhost",
+      // path: "/",
+      // overwrite: true,
+      // signed : true
+    });
+    // res.cookie("Login", "true", {
+    //   httpOnly: true,
+    //   sameSite: "none",
+    //   secure: true,
+    //   maxAge: 60 * 60 * 24 * 1000,
+    //   domain: "localhost",
+    //   path: "/",
+    //   ovewrite: true,
+    //   signed : true
+    // });
+>>>>>>> 19e8a8d (before to clear for cl)
   },
 
   isAuthorized: (req) => {

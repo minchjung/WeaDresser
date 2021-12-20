@@ -38,7 +38,7 @@ function LandingPage () {
         const lot = location.coords.longitude;
         // dispatch(getLocationData(lat, lot));
 
-        const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lot}&appid=${process.env.REACT_APP_API_KEY}`)
+        const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lot}&appid=${process.env.REACT_APP_API_KEY}&units=metric`)
             .catch(err => console.log('err', err));
         const { coord, main, name, sys, weather } = result.data;
         dispatch(getWeatherData({ coord, main, name, sys, weather }));
@@ -115,18 +115,18 @@ function LandingPage () {
                     null // 로딩페이지로 바꿔서 넣어야 할 듯?
                     :
                         <>
-                            <div>
+                            <div> 
                                 <WeatherIcon imgUrl={curIcon}></WeatherIcon>
-                                <span className="temp-now">{(parseInt((weatherData.main.temp - 273.15) * 10)) / 10}°C</span>
+                                <span className="temp-now">{Math.round(weatherData.main.temp * 10/10).toFixed(1)}°C</span>
                                 <span className="desc">{curWeather}</span>
                             </div>
                             <div>
                                 <span className="temp1">최고기온</span>
-                                <span className="temp2">{(parseInt((weatherData.main.temp_max - 273.15) * 10)) / 10}°C</span>
+                                <span className="temp2">{Math.round(weatherData.main.temp_max * 10/10).toFixed(1)}°C</span>
                             </div>
                             <div>
                                 <span className="temp1">최저기온</span>
-                                <span className="temp3">{(parseInt((weatherData.main.temp_min - 273.15) * 10)) / 10}°C</span>
+                                <span className="temp3">{Math.round(weatherData.main.temp_min * 10/10).toFixed(1)}°C</span>
                             </div>
                         </>
                     }

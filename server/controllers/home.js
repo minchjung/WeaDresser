@@ -5,6 +5,7 @@ const { findTopLikeById, findLatestById, findRandomOne, findTopLikeOne } = requi
 module.exports = {
   // * GET  /?tempMin={}&tempMax={}
   findRandom : async (req, res) => {
+    console.log("===========================================여기가 endpoint 1")
     const { tempMin, tempMax } = req.query;
     try{
       await sequelize.transaction( async t => { 
@@ -105,6 +106,7 @@ module.exports = {
 
   // * GET  /?tempMax={}&tempMin={}  
   findById : async (req, res) => {
+    console.log("====================================================여기가 endpoint 2")
     // validation 
     const { tempMax, tempMin }= req.query
     const userInfo = isAuthorized(req);
@@ -157,10 +159,14 @@ module.exports = {
           where : {
             id : userId, 
 <<<<<<< HEAD
+<<<<<<< HEAD
             temp : { [Op.between] : [ tempMin -5, tempMax + 5 ] },
 =======
             temp : { [Op.between] : [ tempMin -10, tempMax + 10 ] },
 >>>>>>> 255394d ( Fixed : server landing home page idary data logic all changed by sequelize)
+=======
+            temp : { [Op.gte] : tempMin -30 },
+>>>>>>> 19e8a8d (before to clear for cl)
             share : true,
           },
           include : [ 
@@ -173,8 +179,10 @@ module.exports = {
           transaction : t
         })
         // if user has diary on that condition where temperature in between tempMin, Max
+        // console.log(UserOne)
         if(UserOne){ 
-        // like condition for current user on found diary                
+        // like condition for current user on found diary  
+          console.log("=================================================================",UserOne.hashtag)              
           userData = UserOne.dataValues
           userData.hashtag = userData.Hashtags.map(hash => hash.dataValues.name).join(', ')
 <<<<<<< HEAD
@@ -192,10 +200,14 @@ module.exports = {
           const RanOne = await Diarie.findOne({
             where : { 
 <<<<<<< HEAD
+<<<<<<< HEAD
               temp : { [Op.between] : [ tempMin -5, tempMax + 5 ] },
 =======
               temp : { [Op.between] : [ tempMin -10, tempMax + 10 ] },
 >>>>>>> 255394d ( Fixed : server landing home page idary data logic all changed by sequelize)
+=======
+              temp : { [Op.between] : [ tempMin -200, tempMax + 200 ] },
+>>>>>>> 19e8a8d (before to clear for cl)
               share : true,
             },
             include : [ 
