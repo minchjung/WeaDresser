@@ -10,7 +10,7 @@
 다른 유저들이 공유한 이미지를 볼 수 있고 좋아요 기능까지 있습니다.<br />
 
 <h2>Architecture</h2>
-<img width="949" alt="스크린샷 2021-11-25 오후 6 49 50" src="https://user-images.githubusercontent.com/78589751/143464839-36984c24-ef08-4ea3-8130-dad1cbd18211.png">
+<img width="917" alt="스크린샷 2021-12-21 오전 2 49 29" src="https://user-images.githubusercontent.com/78589751/146810443-f82996f1-5569-4681-b35b-542af4cdddd7.png">
 
 
 <hr />
