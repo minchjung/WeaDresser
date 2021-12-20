@@ -16,7 +16,7 @@ module.exports = {
       maxAge: 60 * 60 * 24 * 1000,
       // domain: "localhost",
       // path: "/",
-      // ovewrite: true,
+      // overwrite: true,
       // signed : true
     });
     // res.cookie("Login", "true", {

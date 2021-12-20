@@ -37,8 +37,8 @@ function LandingPageLower(){
     const { isLogin } = useSelector(state => state.isLoginReducer);
 
     function userWoreImageRequest(){
-        let tempMax = (parseInt((curTemp.temp_max - 273.15) * 10)) / 10
-        let tempMin = (parseInt((curTemp.temp_min - 273.15) * 10)) / 10
+        let tempMax = Math.round(curTemp.temp_max * 10) / 10;
+        let tempMin = Math.round(curTemp.temp_min * 10) / 10;
         let url = isLogin ? `${process.env.REACT_APP_SERVER_URL}/user` : `${process.env.REACT_APP_SERVER_URL}`
         axios.get(`${url}?tempMax=${tempMax}&tempMin=${tempMin}`, {withCredentials: true})
         .then( res => {
