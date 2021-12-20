@@ -4,6 +4,10 @@ const fs = require('fs');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
+    const nameArr = ['minch', 'donghk', 'yoonhw', 'yow','ciara', 'clare', 'Moody', 'Sun', 'Jungmin', 'Dongmin', 
+    'Yoonmin', 'Keymin', 'Samhwan', 'Sehwan', 'Soo', 'Sea', 'Lay', 'Kasom', 'Siara', 'Suji', 'Leina', 
+    , 'samanda', 'Sangjin', 'toha', 'sehee', 'weadresse', 'ml', 'TK', 'MK', 'AK' , "LK"
+    ] 
     const getImageFiles = () => {
       let imgArr = []
       let lenArr = []
@@ -17,59 +21,46 @@ module.exports = {
       });
       return [imgArr, lenArr.length]
     }
-    
+
     const getRandonNumber = (min, max) => Math.floor( Math.random()* max ) + min 
     const getDiaryData = (userid, idx, img) => {
-      const tempArr = getTemper()
+      const arr = [ [0, 20], [0, 15], [0, 10], [12, 10] ]
+      let minus = idx < 2 ? -1 : 1 ;
+      let [a, b] = [ minus * getRandonNumber(arr[idx][0], arr[idx][1]),  minus * getRandonNumber(arr[idx][0], arr[idx][1]) ] 
+      const maxT = Math.max(a,b)      
+      const minT = Math.min(a,b)     
+
+      const yesterday = ( d => new Date(d.setDate(d.getDate()-getRandonNumber(0,5))) )(new Date);
       return {
         image : "https://s3.us-east-2.amazonaws.com/gathercoding.co/" + (img),
         content : 'dummy content' + (userid),
         weather : 'weather' + (userid),
-        temp : tempArr[idx][0]+ getRandonNumber(0,3), 
-        tempMax : tempArr[idx][1], 
-        tempMin : tempArr[idx][0],
+        temp : (maxT + minT)/2, 
+        tempMax : maxT, 
+        tempMin : minT,
         share : true,
         userId : userid,
         likeCounts : 0,
+        createdAt : yesterday + (getRandonNumber(1,3))*(-1)
       }
     }
     const createUserData = async (userLen) => {
-      const nameArr = ['minch', 'donghk', 'yoonhw', 'younghw','ciara', 'clare', 'Moody', 'Sun', 'Jungmin', 'Dongmin', 
-                      'Yoonmin', 'Keymin', 'Samhwan', 'Sehwan', 'Soo', 'Sea', 'Lay', 'Kasom', 'Siara', 'Suji', 'Leina', ]
-      const userData = new Array(userLen).fill(0).map( (ele, idx) => {
+      const userData = new Array(userLen ).fill(0).map( (ele, idx) => {
+        const name = nameArr[idx] ? nameArr[idx] : nameArr[getRandonNumber(0,10)]
+        // console.log(name)
         const data =   { 
-          userName : nameArr[idx],
+          userName : name,
           email : `abc${idx+1}@email.com`,
           password : `1234`,
           gender : getRandonNumber(0,100)%2 ? 'male' : 'female',
           social : false,
+          
         }
         return data
       })
       return await queryInterface.bulkInsert( 'Users' ,userData, { returning : true })
     }
-    
-    const getTemper = () => {
-      let [a, b] = [getRandonNumber(0,20)*(-1), getRandonNumber(0, 20)*(-1)]
-      let [oneMin, oneMax] = [Math.min(a,b), Math.max(a,b)]
 
-      [a, b] = [getRandonNumber(0,15)*(-1), getRandonNumber(0, 15)*(-1)]
-      let [twoMin, twoMax] = [Math.min(a,b), Math.max(a,b)]
-      
-      [a, b] = [getRandonNumber(0,15)*(-1), getRandonNumber(0, 5)]
-      let [threeMin, threeMax] = [Math.min(a,b), Math.max(a,b)]
- 
-      [a, b] = [getRandonNumber(0,17)*(-1), getRandonNumber(0, 9)]
-      let [fourMin, fourMax] = [Math.min(a,b), Math.max(a,b)]
-     
-      [a, b] = [getRandonNumber(0,5)*(-1), getRandonNumber(0, 10)]
-      let [fiveMin, fiveMax] = [Math.min(a,b), Math.max(a,b)]
-
-      [a, b] = [getRandonNumber(12,22), getRandonNumber(12, 22)]
-      let [sixMin, sixMax] = [Math.min(a,b), Math.max(a,b)]
-
-      return [ [oneMin, oneMax], [twoMin, twoMax], [threeMin, threeMax], [fourMin, fourMax], [fiveMin, fiveMax], [sixMin, sixMax], ]
-    }
 
     const createDiaryData = async (userLen, idx, imgFile) => {
       const userid = getRandonNumber(1, userLen)
@@ -78,10 +69,11 @@ module.exports = {
       return await user.createDiarie(data)
     }
 
-    const user_len = 20
+    const user_len = 30
     const [imgArr , diary_len] = getImageFiles()
     await createUserData(user_len)
     for(let i = 0 ; i < imgArr.length ; i ++){
+      // console.log(i)
       imgArr[i].forEach( async imgFile => { 
         await createDiaryData(user_len, i, imgFile)
       })
@@ -225,3 +217,27 @@ module.exports = {
     // .catch( err => { 
     //   console.log(err)
     // })
+
+
+        
+    // const getTemper = () => {
+    //   let [a, b] = [getRandonNumber(0,20)*(-1), getRandonNumber(0, 20)*(-1)]
+    //   let [oneMin, oneMax] = [Math.min(a,b), Math.max(a,b)]
+
+    //   [a, b] = [getRandonNumber(0,15)*(-1), getRandonNumber(0, 15)*(-1)]
+    //   let [twoMin, twoMax] = [Math.min(a,b), Math.max(a,b)]
+      
+    //   [a, b] = [getRandonNumber(0,15)*(-1), getRandonNumber(0, 5)]
+    //   let [threeMin, threeMax] = [Math.min(a,b), Math.max(a,b)]
+ 
+    //   [a, b] = [getRandonNumber(0,17)*(-1), getRandonNumber(0, 9)]
+    //   let [fourMin, fourMax] = [Math.min(a,b), Math.max(a,b)]
+     
+    //   [a, b] = [getRandonNumber(0,5)*(-1), getRandonNumber(0, 10)]
+    //   let [fiveMin, fiveMax] = [Math.min(a,b), Math.max(a,b)]
+
+    //   [a, b] = [getRandonNumber(12,22), getRandonNumber(12, 22)]
+    //   let [sixMin, sixMax] = [Math.min(a,b), Math.max(a,b)]
+
+    //   return [ [oneMin, oneMax], [twoMin, twoMax], [threeMin, threeMax], [fourMin, fourMax], [fiveMin, fiveMax], [sixMin, sixMax], ]
+    // }

@@ -5,7 +5,7 @@ const { findTopLikeById, findLatestById, findRandomOne, findTopLikeOne } = requi
 module.exports = {
   // * GET  /?tempMin={}&tempMax={}
   findRandom : async (req, res) => {
-    console.log("===========================================여기가 endpoint 1")
+    console.log("====================================================여기가 endpoint 1")
     const { tempMin, tempMax } = req.query;
     try{
       await sequelize.transaction( async t => { 
@@ -67,7 +67,7 @@ module.exports = {
         delete topData.Hashtags
         delete topData.User
 
-        // console.log(topData)
+        console.log('endpoint1=======================',ranData, topData)
         return res.json([ranData, topData])
 <<<<<<< HEAD
 =======
@@ -109,6 +109,7 @@ module.exports = {
     console.log("====================================================여기가 endpoint 2")
     // validation 
     const { tempMax, tempMin }= req.query
+    console.log('======================================================',tempMax, tempMin)
     const userInfo = isAuthorized(req);
     const validUser = await isValid(userInfo.email, userInfo.id);
     if(!validUser){
@@ -117,7 +118,6 @@ module.exports = {
     try{
       await sequelize.transaction( async t => { 
         // get Most like diary with username
-        const userId = validUser.id
         const TopOne = await Diarie.findOne({
           where : { 
 <<<<<<< HEAD
@@ -129,7 +129,7 @@ module.exports = {
           },
           include : [ 
             { model : User, attributes : ['userName'] },
-            { model : Hashtag, through : {attributes : []} },
+            { model : Hashtag, through : { attributes : [] } },
           ],
           order: [['likeCounts', 'DESC']],
           limit : 1, 
@@ -141,10 +141,14 @@ module.exports = {
         topData.hashtag = topData.Hashtags.map(hash => hash.dataValues.name).join(', ')
 <<<<<<< HEAD
         topData.likeWhether = await Like.findOne({ where : 
+<<<<<<< HEAD
 =======
         topData.likeWether = await Like.findOne({ where : 
 >>>>>>> 255394d ( Fixed : server landing home page idary data logic all changed by sequelize)
           { diarieId : TopOne.id, userId : userId},
+=======
+          { diarieId : TopOne.id },
+>>>>>>> b9cb256 (FIX : home landing server bug on left response)
           transaction : t
         }) ? 1 : 0 
 
@@ -155,8 +159,10 @@ module.exports = {
         
         // found user Diary 
         let userData ;
+        const userId = validUser.id
         const UserOne = await Diarie.findOne({
           where : {
+<<<<<<< HEAD
             id : userId, 
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -167,6 +173,10 @@ module.exports = {
 =======
             temp : { [Op.gte] : tempMin -30 },
 >>>>>>> 19e8a8d (before to clear for cl)
+=======
+            userId : userId, 
+            temp : { [Op.between] : [ tempMin -5, tempMax + 5] },
+>>>>>>> b9cb256 (FIX : home landing server bug on left response)
             share : true,
           },
           include : [ 
@@ -178,11 +188,11 @@ module.exports = {
           nest : true,
           transaction : t
         })
+        // console.log("dsafadfasdfasdfasdf=================================================================")              
+
         // if user has diary on that condition where temperature in between tempMin, Max
-        // console.log(UserOne)
         if(UserOne){ 
         // like condition for current user on found diary  
-          console.log("=================================================================",UserOne.hashtag)              
           userData = UserOne.dataValues
           userData.hashtag = userData.Hashtags.map(hash => hash.dataValues.name).join(', ')
 <<<<<<< HEAD
@@ -201,6 +211,7 @@ module.exports = {
             where : { 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
               temp : { [Op.between] : [ tempMin -5, tempMax + 5 ] },
 =======
               temp : { [Op.between] : [ tempMin -10, tempMax + 10 ] },
@@ -208,6 +219,9 @@ module.exports = {
 =======
               temp : { [Op.between] : [ tempMin -200, tempMax + 200 ] },
 >>>>>>> 19e8a8d (before to clear for cl)
+=======
+              temp : { [Op.between] : [ tempMin -5, tempMax + 5 ] },
+>>>>>>> b9cb256 (FIX : home landing server bug on left response)
               share : true,
             },
             include : [ 
@@ -239,6 +253,7 @@ module.exports = {
         delete userData.User
         
         // console.log(topData)
+        console.log('endpoint2=======================',userData, topData)
         return res.json([userData, topData])
       })
     }

@@ -16,8 +16,8 @@ module.exports = {
       console.log("diarieId =", diaryId, "like 갯수=", likeCount.length)
     }
     
-    const userLen = 20;
-    const diaryLen = 486;
+    const userLen = 30;
+    const diaryLen = 343;
     let checkArr = new Array(userLen+1).fill(0).map( _ => new Array(diaryLen+1).fill(false))
     checkArr[0][0] = true;
     for(let i = 1 ; i < 2*(userLen*diaryLen/5); i++ ){ // like data len = 500

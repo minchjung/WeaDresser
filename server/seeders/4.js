@@ -10,8 +10,8 @@ module.exports = {
       return hashtags
     }
     
-    const hashLen = 37
-    const diaryLen = 486;
+    const hashLen = 30
+    const diaryLen = 343;
 
     for(let d = 1 ; d < (hashLen*diaryLen)/2; d++){
       let checkDiary = new Array(diaryLen + 1).fill(false);
