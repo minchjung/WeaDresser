@@ -3,46 +3,29 @@ const { Diarie, sequelize, User, Like, Hashtag, DiariesHashtag  } = require('../
 const { Op } = require('sequelize')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    try{
-      await sequelize.transaction( async t => { 
-        // get Most like diary with username
-        const [ tempMax, tempMin] = [-10, -11] 
-        const TopOne = await Diarie.findOne({
-          where : { 
-            temp : { [Op.between] : [ tempMin -10, tempMax + 10 ] }
+
+    let userData ;
+    let tempMin = -12; 
+    let tempMax = -3; 
+        const UserOne = await Diarie.findOne({
+          where : {
+            userId : 1, 
+            temp : { [Op.between] : [ tempMin -5, tempMax + 5] },
+            share : true,
           },
-          include : [ 
-            { model : User, attributes : ['userName'] }
-          ],
-          order : [['likeCounts','DESC']],
+
+          order: [['CreatedAt', 'DESC']],
           limit : 1, 
-          raw: true, nest : true,
-          transaction : t
+          nest : true,
         })
-        // get same one to find hashtags all to set appropiate parsing data 
-        const diary = await Diarie.findByPk(TopOne.id, { transaction : t })
-        const foundHash = await diary.getHashtags({ 
-          through : { attributes : [] }, 
-          attributes : ['name'], 
-          raw : true, nest : true, 
-          transaction : t
-        })
-        // hash array to hash string with , comma 
-        const hashtag = foundHash.map( ele => ele.name).join(',')
-        TopOne.hashtag = hashtag 
-        // to give current users info wether he liked the diary or not         
-        const userId = 10 
-        TopOne.likeWether = await Like.findOne({ where : { 
-          diarieId : TopOne.id, userId : userId
-         },
-         transaction : t
-        }) ? 0 : 1 
-        console.log(TopOne)
-      })
-    }
-    catch(err) { 
-      console.log(err)
-    }
+        console.log("dsafadfasdfasdfasdf=================================================================", UserOne)              
+
+//     hang.changed('createdAt', true);
+//     hang.set('createdAt', yesterday,{raw: true});
+//     await hang.save({
+//         silent: true,
+//         fields: ['createdAt']
+//  });    
 
     // const hasharr = foundHash.map( (ele, idx) =>  ele.name ).join(', ') 
     // TopOne.likeWhether = foundLikes.length
