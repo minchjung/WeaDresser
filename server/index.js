@@ -1,5 +1,4 @@
 require("dotenv").config();
-const fs = require("fs");
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -26,7 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ['https://localhost:3000'],
+    origin: 'https://localhost:3000',
     // origin : true, 
     credentials: true,
     methods: ["GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"],
@@ -51,6 +50,7 @@ app.get("/check", (req, res) => {
 // server.listen(port, () =>  console.log("httpSSS server running"))
 // }
 // else{
+
 
 
 app.listen(PORT, () => console.log("http server running"))

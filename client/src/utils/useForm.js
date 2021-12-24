@@ -109,7 +109,7 @@ export const useForm = () => {
     if(goodToGo){
       const userEmail = document.querySelector('.emailDiv').innerText;
       const newPayload = Object.assign({}, values, { email : userEmail});
-      const SERVER = process.env.REACT_APP_SERVER_URL || 'http://localhost:80';
+      const SERVER = process.env.REACT_APP_SERVER_URL
 
       await axios.post(
         SERVER + '/users/signup',
@@ -144,7 +144,7 @@ export const useForm = () => {
 // Actual signup validation! 
 export const validationInfo = (values) => {
   let validMsg = { };
-
+  const pattern = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,}$/
   if(values.userName === ''){ 
     validMsg.userName = "닉네임을 입력해 주세요";
     validMsg.done = false;
@@ -156,6 +156,9 @@ export const validationInfo = (values) => {
   if(!values.password  || !values.password2){
     validMsg.password= "비밀번호를 입력해 주세요" 
     validMsg.done = false;
+  }
+  if(values.password && !pattern.test(values.password)){
+    validMsg.password = '최소 8자 이상 문자 와 숫자/특수문자를 모두 포함해야합니다'
   }
   if(values.password && values.password2 && values.password !== values.password2){
     validMsg.password = "비밀번호가 일치 하지 않습니다" 
