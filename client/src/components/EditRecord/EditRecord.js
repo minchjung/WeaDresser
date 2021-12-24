@@ -75,7 +75,11 @@ function EditRecord({ curSlide, setCurSlide, setIsEdit, fetchedDiary, }) {
         formData.append('diaryId', diaryId);
         // const url = process.env.REACT_APP_SERVER_URL || 
 <<<<<<< HEAD
+<<<<<<< HEAD
         const url = `http://localhost:80/mypage/diary` // server랑 확인할때 환경변수 x
+=======
+        const url = `${process.env.REACT_APP_SERVER_URL}/mypage/diary` // server랑 확인할때 환경변수 x
+>>>>>>> cab08ae ([task] deploy)
         axios.patch(url, formData, { withCredentials: true})
 =======
         const url = 'http://localhost:80/mypage/diary' // server랑 확인할때 환경변수 x
@@ -85,9 +89,10 @@ function EditRecord({ curSlide, setCurSlide, setIsEdit, fetchedDiary, }) {
             }, withCredentials: true })
 >>>>>>> 067bd6c (before merge)
             .then(res => console.log('edit successfully'))
+            .then(() =>{
+                window.location.reload();
+            })
             .catch(err => console.log(err))
-
-        window.location.reload();
     }
 
     function cancelEdit (e) {

@@ -19,9 +19,14 @@ export const useLoginApi = () => {
   const getGoogleAccToken = () => {
     sessionStorage.setItem('redirect',window.location.href)
     console.log(window.location.href)
+<<<<<<< HEAD
     const client_id = process.env.REACT_APP_KEY_GOOGLE 
     const redirect_uri = process.env.REACT_APP_REDIRECT_URL 
     // || "https://localhost:3000"
+=======
+    const client_id = process.env.REACT_APP_KEY_GOOGLE
+    const redirect_uri = process.env.REACT_APP_REDIRECT_URL
+>>>>>>> cab08ae ([task] deploy)
     const google= `https://accounts.google.com/o/oauth2/v2/auth?client_id=${client_id}&response_type=token&redirect_uri=${redirect_uri}&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile`
     window.location.assign(google)
   };
@@ -50,8 +55,12 @@ export const useLoginApi = () => {
   // * double check ok 
   // ! dot env check point 
   const handleGoogleLoginApi = async (email, name ) => {
+<<<<<<< HEAD
     const SERVER = process.env.REACT_APP_SERVER_URL 
     // || "http://localhost:80"
+=======
+    const SERVER = process.env.REACT_APP_SERVER_URL
+>>>>>>> cab08ae ([task] deploy)
     axios.post(`${SERVER}/oauth/google`, 
       { email : email, userName : name }, 
       { withCredentials : true }
@@ -83,7 +92,11 @@ export const useLoginApi = () => {
   const getKakaoAccToken = async (kakaoCode) => {
     const client_id = process.env.REACT_APP_KEY_KAKAO
     const client_secret = process.env.REACT_APP_KAKAO_SECRET
+<<<<<<< HEAD
     const redirect_uri = process.env.REACT_APP_REDIRECT_URL 
+=======
+    const redirect_uri= process.env.REACT_APP_REDIRECT_URL 
+>>>>>>> cab08ae ([task] deploy)
     const kakaoUrl = `https://kauth.kakao.com/oauth/token?code=${kakaoCode}&client_id=${client_id}&client_secret=${client_secret}&redirect_uri=${redirect_uri}&grant_type=authorization_code`;
     
     const data = await axios.post(
@@ -103,8 +116,12 @@ export const useLoginApi = () => {
   // * double check ok
   // ! dot env check point 
   const handleKakaoLoginApi = async ({accessToken}) => {
+<<<<<<< HEAD
     const SERVER = process.env.REACT_APP_SERVER_URL 
     // || "http://localhost:80"
+=======
+    const SERVER = process.env.REACT_APP_SERVER_URL
+>>>>>>> cab08ae ([task] deploy)
     axios.post(
       `${SERVER}/oauth/kakao`,
       { accessToken }, // 카카오 토큰
@@ -125,9 +142,13 @@ export const useLoginApi = () => {
   // * double check ok
   // ! dot env check point 
   const handleUserLoginApi = async ({ email, password }) => {
+<<<<<<< HEAD
     // console.log("login ajax call here now ")
     const SERVER = process.env.REACT_APP_SERVER_URL 
     // || 'http://localhost:80'
+=======
+    const SERVER = process.env.REACT_APP_SERVER_URL
+>>>>>>> cab08ae ([task] deploy)
     axios.post(
       SERVER + "/users/signin",
       // `${process.env.REACT_APP_SERVER_URL}/users/signin`,
@@ -186,4 +207,8 @@ export const useLoginApi = () => {
     handleKakaoLoginApi, handleGoogleLoginApi, handleUserLoginApi,
     validCheckHandler
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> cab08ae ([task] deploy)

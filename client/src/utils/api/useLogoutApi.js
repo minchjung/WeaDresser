@@ -2,8 +2,12 @@ import axios from 'axios';
 require('dotenv').config();
 
 export const useLogoutApi = () => {
+<<<<<<< HEAD
   const SERVER = process.env.REACT_APP_SERVER_URL 
   // || 'http://localhost:80'
+=======
+  const SERVER = process.env.REACT_APP_SERVER_URL
+>>>>>>> cab08ae ([task] deploy)
   const logoutHandler = async () => {
     
     return await axios.post(

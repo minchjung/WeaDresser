@@ -112,7 +112,11 @@ export const useForm = () => {
     if(goodToGo){
       const userEmail = document.querySelector('.emailDiv').innerText;
       const newPayload = Object.assign({}, values, { email : userEmail});
+<<<<<<< HEAD
       const SERVER = process.env.REACT_APP_SERVER_URL 
+=======
+      const SERVER = process.env.REACT_APP_SERVER_URL
+>>>>>>> cab08ae ([task] deploy)
 
       await axios.post(
         SERVER + '/users/signup',

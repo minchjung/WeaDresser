@@ -106,8 +106,10 @@ module.exports = {
 
   // * GET  /?tempMax={}&tempMin={}  
   findById : async (req, res) => {
+    console.log("====================================================여기가 endpoint 2")
     // validation 
     const { tempMax, tempMin }= req.query
+    console.log('======================================================',tempMax, tempMin)
     const userInfo = isAuthorized(req);
     const validUser = await isValid(userInfo.email, userInfo.id);
     if(!validUser){
@@ -140,6 +142,7 @@ module.exports = {
 <<<<<<< HEAD
         topData.likeWhether = await Like.findOne({ where : 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         topData.likeWether = await Like.findOne({ where : 
 >>>>>>> 255394d ( Fixed : server landing home page idary data logic all changed by sequelize)
@@ -147,6 +150,9 @@ module.exports = {
 =======
           { diarieId : TopOne.id },
 >>>>>>> b9cb256 (FIX : home landing server bug on left response)
+=======
+          { diarieId : TopOne.id },
+>>>>>>> cab08ae ([task] deploy)
           transaction : t
         }) ? 1 : 0 
 
@@ -160,6 +166,7 @@ module.exports = {
         const userId = validUser.id
         const UserOne = await Diarie.findOne({
           where : {
+<<<<<<< HEAD
 <<<<<<< HEAD
             id : userId, 
 <<<<<<< HEAD
@@ -175,6 +182,10 @@ module.exports = {
             userId : userId, 
             temp : { [Op.between] : [ tempMin -5, tempMax + 5] },
 >>>>>>> b9cb256 (FIX : home landing server bug on left response)
+=======
+            userId : userId, 
+            temp : { [Op.between] : [ tempMin -5, tempMax + 5] },
+>>>>>>> cab08ae ([task] deploy)
             share : true,
           },
           include : [ 
@@ -186,6 +197,10 @@ module.exports = {
           nest : true,
           transaction : t
         })
+<<<<<<< HEAD
+=======
+        // console.log("dsafadfasdfasdfasdf=================================================================")              
+>>>>>>> cab08ae ([task] deploy)
 
         // if user has diary on that condition where temperature in between tempMin, Max
         if(UserOne){ 
@@ -249,6 +264,11 @@ module.exports = {
         delete userData.Hashtags
         delete userData.User
         
+<<<<<<< HEAD
+=======
+        // console.log(topData)
+        console.log('endpoint2=======================',userData, topData)
+>>>>>>> cab08ae ([task] deploy)
         return res.json([userData, topData])
       })
     }

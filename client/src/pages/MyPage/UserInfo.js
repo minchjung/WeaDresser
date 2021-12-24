@@ -37,15 +37,12 @@ function UserInfo(){
     const [closeSocial, setCloseSocial] = useState(true);
 
     useEffect(() => {
-        console.log("useEffect get request")
         /*const curUser = window.sessionStorage.getItem('email');*/
         // 로딩 넣으면 좋을듯
-        // console.log(userData)
         axios.get(`${process.env.REACT_APP_SERVER_URL}/mypage/users`, {withCredentials: true})
             .then(res => {
                 setIsSocial(res.data.data.social);
                 setCurUserNickname(res.data.data.userName)
-                console.log(isSocial)
             })
             .catch(err => {
                 // console.log('fail')// 에러창을 추후에 만들면 좋을듯 싶음
@@ -103,9 +100,19 @@ function UserInfo(){
 
         axios.patch(`${process.env.REACT_APP_SERVER_URL}/mypage/users`,userData2,{withCredentials : true})
             .then(res => {
+<<<<<<< HEAD
                 console.log('유저 정보 업데이트 성공')
                 setSucUpdate(true)
                 setShowUpdateModal(true)
+=======
+                setSucUpdate(true)
+                setShowUpdateModal(true)
+                setCurUserNickname(fixUserName)
+                setCurUserPw('')
+                setUpdatePw('')
+                setCheckUpdatePw('')
+                setFixUserName('')
+>>>>>>> cab08ae ([task] deploy)
             })
             .catch(err => {
                 console.log('fail')// 에러창을 추후에 만들면 좋을듯 싶음

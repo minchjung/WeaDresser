@@ -80,6 +80,7 @@ module.exports = {
   // * DELETE  mypage/users 회원탈퇴
   delete: async (req, res) => {
     const accessTokenData = isAuthorized(req);
+<<<<<<< HEAD
     if (!accessTokenData)  return res.status(401).send("not authorized");
     try{
       await sequelize.transaction( async t => { 
@@ -104,5 +105,29 @@ module.exports = {
       console.log(err)
       return res.status(500).send("Internal server error")       
     }
+=======
+    // console.log(accessTokenData);
+    if (!accessTokenData) {
+      return res.status(401).send("not authorized");
+    }
+    
+    await User.destroy({
+      where: {
+        id: accessTokenData.id,
+      },
+    }).then(() =>{
+      res
+      .clearCookie("authorization", {
+        httpOnly: true,
+        sameSite: "none",
+        secure: true,
+        path: "/",
+        domain: "weadresser.ml",
+      });
+      res.status(200).send("ok");
+    }).catch((err) => {
+      console.log(err);
+    });
+>>>>>>> cab08ae ([task] deploy)
   },
 };

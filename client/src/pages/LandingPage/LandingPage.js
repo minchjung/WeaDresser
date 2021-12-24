@@ -15,6 +15,11 @@ import cloud from '../../images/cloud.png';
 import moon from '../../images/moon.png';
 import rain from '../../images/rain.png';
 import snow from '../../images/snow.png';
+<<<<<<< HEAD
+=======
+import LoadingIndicator from '../../components/Loading/LoadingIndicator';
+import LandingPageLower from './LandingPageLower'
+>>>>>>> cab08ae ([task] deploy)
 
 function LandingPage () {
 
@@ -24,6 +29,10 @@ function LandingPage () {
     // const [dayNight, setDayNight] = useState('day');
     const dispatch = useDispatch();
     const weatherData = useSelector(state => state.getWeatherDataReducer); // redux-thunk 다시 보기
+<<<<<<< HEAD
+=======
+    const {navTopLoc} = useSelector(state => state.navTopReducer);
+>>>>>>> cab08ae ([task] deploy)
     function askForCoords() {
         const options = {
             enableHighAccuracy: true,
@@ -33,15 +42,21 @@ function LandingPage () {
         navigator.geolocation.getCurrentPosition(handleGeoSucces, handleGeoError, options);
     }
 
-    async function handleGeoSucces (location) {
+    function handleGeoSucces (location) {
         const lat = location.coords.latitude;
         const lot = location.coords.longitude;
         // dispatch(getLocationData(lat, lot));
 
+<<<<<<< HEAD
         const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lot}&appid=${process.env.REACT_APP_API_KEY}&units=metric`)
+=======
+        axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lot}&appid=${process.env.REACT_APP_API_KEY}&units=metric`)
+            .then(result => {
+                const { coord, main, name, sys, weather } = result.data;
+                dispatch(getWeatherData({ coord, main, name, sys, weather }));
+            })
+>>>>>>> cab08ae ([task] deploy)
             .catch(err => console.log('err', err));
-        const { coord, main, name, sys, weather } = result.data;
-        dispatch(getWeatherData({ coord, main, name, sys, weather }));
     }
     
     function handleGeoError (err) {
@@ -72,8 +87,12 @@ function LandingPage () {
                  setCurWeather('맑음');
                  setCurIcon(sun);
              }
+<<<<<<< HEAD
 >>>>>>> a2708bb ([modify] image-edit error handling)
             if (weatherData.weather[0].main === 'Clouds') {
+=======
+             if (weatherData.weather[0].main === 'Clouds' || weatherData.weather[0].main === 'Fog' || weatherData.weather[0].main === 'Mist') {
+>>>>>>> cab08ae ([task] deploy)
                 setCurWeather('흐림');
                 setCurIcon(cloud);
             }
@@ -112,21 +131,35 @@ function LandingPage () {
                     <WeahterBarBox>
                     {
                     !weatherData.main ? 
-                    null // 로딩페이지로 바꿔서 넣어야 할 듯?
+                        <LoadingIndicator /> // 로딩페이지로 바꿔서 넣어야 할 듯?
                     :
                         <>
+<<<<<<< HEAD
                             <div> 
                                 <WeatherIcon imgUrl={curIcon}></WeatherIcon>
                                 <span className="temp-now">{Math.round(weatherData.main.temp * 10/10).toFixed(1)}°C</span>
+=======
+                            <div className='weather-area'>
+                                <WeatherIcon imgUrl={curIcon}></WeatherIcon>
+                                <span className="temp-now">{Math.round(weatherData.main.temp * 10 / 10).toFixed(1)}°C</span>
+>>>>>>> cab08ae ([task] deploy)
                                 <span className="desc">{curWeather}</span>
                             </div>
-                            <div>
+                            <div className='weather-area'>
                                 <span className="temp1">최고기온</span>
+<<<<<<< HEAD
                                 <span className="temp2">{Math.round(weatherData.main.temp_max * 10/10).toFixed(1)}°C</span>
+=======
+                                <span className="temp2">{Math.round(weatherData.main.temp_max * 10 / 10).toFixed(1)}°C</span>
+>>>>>>> cab08ae ([task] deploy)
                             </div>
-                            <div>
+                            <div className='weather-area'>
                                 <span className="temp1">최저기온</span>
+<<<<<<< HEAD
                                 <span className="temp3">{Math.round(weatherData.main.temp_min * 10/10).toFixed(1)}°C</span>
+=======
+                                <span className="temp3">{Math.round(weatherData.main.temp_min * 10 / 10).toFixed(1)}°C</span>
+>>>>>>> cab08ae ([task] deploy)
                             </div>
                         </>
                     }
