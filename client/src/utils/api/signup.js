@@ -8,7 +8,7 @@ export const getEmailValidation = ( endpoint, params ) => {
   const query = `?email=${params}`;
   console.log(SERVER + endpoint+query)
   return axios.get(
-    SERVER + endpoint + query, 
+    SERVER + endpoint + query,
     { withCredentials : true }
   )
   .then(result => result)

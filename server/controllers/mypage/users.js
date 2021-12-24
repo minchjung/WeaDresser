@@ -89,19 +89,18 @@ module.exports = {
       where: {
         id: accessTokenData.id,
       },
-    }).catch((err) => {
-      console.log(err);
-    });
-
-    res
+    }).then(() =>{
+      res
       .clearCookie("authorization", {
         httpOnly: true,
         sameSite: "none",
         secure: true,
         path: "/",
-        domail: "/",
-      })
-      .status(200)
-      .send("ok");
+        domain: "weadresser.ml",
+      });
+      res.status(200).send("ok");
+    }).catch((err) => {
+      console.log(err);
+    });
   },
 };
