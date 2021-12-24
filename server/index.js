@@ -50,5 +50,7 @@ app.get("/check", (req, res) => {
 // server.listen(port, () =>  console.log("httpSSS server running"))
 // }
 // else{
-app.listen(PORT, () => console.log("http server running"));
-// }
+
+
+
+app.listen(PORT, () => console.log("http server running"))

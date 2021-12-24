@@ -1,21 +1,33 @@
 'use strict';
 const { Diarie, sequelize, User, Like  } = require('../models')
+const fs = require('fs');
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-  
+    const getImageFiles = () => {
+      let imgArr = []
+      let lenArr = []
+      const path = fs.readdirSync(__dirname + "/image")
+      path.forEach(dir => {
+        if(dir !== '.DS_Store'){
+          const nnon = fs.readdirSync(__dirname + "/image/" + dir)
+          imgArr.push(nnon)
+          lenArr.push(...nnon)
+        } 
+      });
+      return [imgArr, lenArr.length]
+    }
+    
     const getRandonNumber = (min, max) => Math.floor( Math.random()* max ) + min 
-    const getDiaryData = (userid) => {
-      const off = getRandonNumber(5, 15) + 1
-      const minuse = getRandonNumber(0,10) % 2 ? -1 : 1
-      const tempRange = getRandonNumber(0, 40);
-      let tempCur = tempRange <= 20 ? tempRange* minuse : tempRange 
+    const getDiaryData = (userid, idx, img) => {
+      const tempArr = getTemper()
       return {
-        image : "dumimage" + (userid ),
+        image : "https://s3.us-east-2.amazonaws.com/gathercoding.co/" + (img),
         content : 'dummy content' + (userid),
         weather : 'weather' + (userid),
-        temp : tempCur, 
-        tempMax : tempCur + off, 
-        tempMin : tempCur - off,
+        temp : tempArr[idx][0]+ getRandonNumber(0,3), 
+        tempMax : tempArr[idx][1], 
+        tempMin : tempArr[idx][0],
         share : getRandonNumber(0,100)%2,
         userId : userid,
         likeCounts : 0,
@@ -35,20 +47,43 @@ module.exports = {
       return await queryInterface.bulkInsert( 'Users' ,userData, { returning : true })
     }
     
-    const createDiaryData = async (userLen) => {
+    const getTemper = () => {
+      let [a, b] = [getRandonNumber(0,20)*(-1), getRandonNumber(0, 20)*(-1)]
+      let [oneMin, oneMax] = [Math.min(a,b), Math.max(a,b)]
+
+      [a, b] = [getRandonNumber(0,15)*(-1), getRandonNumber(0, 15)*(-1)]
+      let [twoMin, twoMax] = [Math.min(a,b), Math.max(a,b)]
+      
+      [a, b] = [getRandonNumber(0,15)*(-1), getRandonNumber(0, 5)]
+      let [threeMin, threeMax] = [Math.min(a,b), Math.max(a,b)]
+ 
+      [a, b] = [getRandonNumber(0,17)*(-1), getRandonNumber(0, 9)]
+      let [fourMin, fourMax] = [Math.min(a,b), Math.max(a,b)]
+     
+      [a, b] = [getRandonNumber(0,5)*(-1), getRandonNumber(0, 10)]
+      let [fiveMin, fiveMax] = [Math.min(a,b), Math.max(a,b)]
+
+      [a, b] = [getRandonNumber(12,22), getRandonNumber(12, 22)]
+      let [sixMin, sixMax] = [Math.min(a,b), Math.max(a,b)]
+
+      return [ [oneMin, oneMax], [twoMin, twoMax], [threeMin, threeMax], [fourMin, fourMax], [fiveMin, fiveMax], [sixMin, sixMax], ]
+    }
+
+    const createDiaryData = async (userLen, idx, imgFile) => {
       const userid = getRandonNumber(1, userLen)
-      const data = getDiaryData( userid ) // userid
+      const data = getDiaryData( userid , idx, imgFile) // userid
       const user = await User.findByPk(userid);
       return await user.createDiarie(data)
     }
 
-    const user_len = 500
-    const diary_len = 1000
+    const user_len = 20
+    const [imgArr , diary_len] = getImageFiles()
     await createUserData(user_len)
-    for(let i = 0 ; i < diary_len ; i ++){
-      await createDiaryData(user_len)
+    for(let i = 0 ; i < imgArr.length ; i ++){
+      imgArr[i].forEach( async imgFile => { 
+        await createDiaryData(user_len, i, imgFile)
+      })
     }
-
     // const diaryLikes = await Like.findAll({ where : { diarieId : 1 } })
     // const before = await diary.getLikes({ raw :true, nest : true })
     // console.log(before)
