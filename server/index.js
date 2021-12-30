@@ -1,5 +1,4 @@
 require("dotenv").config();
-const fs = require("fs");
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -7,36 +6,26 @@ const https = require("https");
 const session = require('express-session');
 const indexRouter = require("./routers");
 const cookieParser = require("cookie-parser");
-//require("./models");
-// const sequelize = require('Sequelize')
 
-// const port = process.env.HTTP_PORT || 4000;
 const PORT = 80;
 const client = `${process.env.CLIENT_URL}` 
 const test = `https://localhost:3000`
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-// app.use(
-//   session({
-//     secret: "saltkey",
-//     resave: false,
-//     saveUninitialized: true,
-//   })
-// );
+
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ['https://localhost:3000', 'https://wwww.weadresser.ml','https://weadresser.ml'],
-    // origin : true, 
+    // origin: ['https://localhost:3000', 'https://wwww.weadresser.ml','https://weadresser.ml'],
+    origin: 'https://www.weadresser.ml',
     credentials: true,
     methods: ["GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"],
   })
 );
-// app.use(cookieParser('abcd'));
 
 app.use("/", indexRouter);
 app.get("/", (req, res) => {
-  res.send("Hello World"); // 일단 '/' 귀결되면 Hello world (just for 배포)
+  res.send("Hello World"); 
 });
 
 app.get("/check", (req, res) => {
@@ -44,4 +33,4 @@ app.get("/check", (req, res) => {
 });
 
 
-app.listen(PORT, () => console.log("http server running"))
+app.listen(PORT, () => console.log("https server running"))

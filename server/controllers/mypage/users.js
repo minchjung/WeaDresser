@@ -81,6 +81,7 @@ module.exports = {
   delete: async (req, res) => {
     const accessTokenData = isAuthorized(req);
     if (!accessTokenData)  return res.status(401).send("not authorized");
+    
     try{
       await sequelize.transaction( async t => { 
         const user = await User.findByPk(accessTokenData.id, { transaction : t });

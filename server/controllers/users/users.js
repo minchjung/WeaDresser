@@ -88,14 +88,16 @@ module.exports = {
 
   // *  POST users/signout
   signout: (req, res) => {
-    // console.log("its comming now")
+    console.log("its comming now")
 
-    // res.clearCookie('Bearer', { domain: "localhost" });
+    // res.clearCookie('jwt');
+//	return res.json({ message: 'logout success' })
     res.clearCookie("Bearer", {
       secure: true,
       sameSite: "none",
       httpOnly: true,
-    });
-    return res.status(205).send('Logged out successfully') 
+      path: "/",
+      domain: "weadresser.ml"
+    }).status(205).send('Logged out successfully') 
   },
 };

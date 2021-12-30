@@ -5,7 +5,6 @@ const { findTopLikeById, findLatestById, findRandomOne, findTopLikeOne } = requi
 module.exports = {
   // * GET  /?tempMin={}&tempMax={}
   findRandom : async (req, res) => {
-    console.log("====================================================여기가 endpoint 1")
     const { tempMin, tempMax } = req.query;
     try{
       await sequelize.transaction( async t => { 
@@ -68,12 +67,14 @@ module.exports = {
 
   // * GET  /?tempMax={}&tempMin={}  
   findById : async (req, res) => {
+    console.log("====================================================여기가 endpoint 2")
     // validation 
     const { tempMax, tempMin }= req.query
+    console.log('======================================================',tempMax, tempMin)
     const userInfo = isAuthorized(req);
     const validUser = await isValid(userInfo.email, userInfo.id);
     if(!validUser){
-      return res.status(404).json("not authorized!");
+      return res.status(401).json("not authorized!");
     }
     try{
       await sequelize.transaction( async t => { 
@@ -166,6 +167,8 @@ module.exports = {
         delete userData.Hashtags
         delete userData.User
         
+        // console.log(topData)
+        console.log('endpoint2=======================',userData, topData)
         return res.json([userData, topData])
       })
     }

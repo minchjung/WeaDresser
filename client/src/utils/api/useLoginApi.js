@@ -19,9 +19,8 @@ export const useLoginApi = () => {
   const getGoogleAccToken = () => {
     sessionStorage.setItem('redirect',window.location.href)
     console.log(window.location.href)
-    const client_id = process.env.REACT_APP_KEY_GOOGLE 
-    const redirect_uri = process.env.REACT_APP_REDIRECT_URL 
-    // || "https://localhost:3000"
+    const client_id = process.env.REACT_APP_KEY_GOOGLE
+    const redirect_uri = process.env.REACT_APP_REDIRECT_URL
     const google= `https://accounts.google.com/o/oauth2/v2/auth?client_id=${client_id}&response_type=token&redirect_uri=${redirect_uri}&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile`
     window.location.assign(google)
   };
@@ -50,8 +49,7 @@ export const useLoginApi = () => {
   // * double check ok 
   // ! dot env check point 
   const handleGoogleLoginApi = async (email, name ) => {
-    const SERVER = process.env.REACT_APP_SERVER_URL 
-    // || "http://localhost:80"
+    const SERVER = process.env.REACT_APP_SERVER_URL
     axios.post(`${SERVER}/oauth/google`, 
       { email : email, userName : name }, 
       { withCredentials : true }
@@ -83,7 +81,7 @@ export const useLoginApi = () => {
   const getKakaoAccToken = async (kakaoCode) => {
     const client_id = process.env.REACT_APP_KEY_KAKAO
     const client_secret = process.env.REACT_APP_KAKAO_SECRET
-    const redirect_uri = process.env.REACT_APP_REDIRECT_URL 
+    const redirect_uri= process.env.REACT_APP_REDIRECT_URL 
     const kakaoUrl = `https://kauth.kakao.com/oauth/token?code=${kakaoCode}&client_id=${client_id}&client_secret=${client_secret}&redirect_uri=${redirect_uri}&grant_type=authorization_code`;
     
     const data = await axios.post(
@@ -103,8 +101,7 @@ export const useLoginApi = () => {
   // * double check ok
   // ! dot env check point 
   const handleKakaoLoginApi = async ({accessToken}) => {
-    const SERVER = process.env.REACT_APP_SERVER_URL 
-    // || "http://localhost:80"
+    const SERVER = process.env.REACT_APP_SERVER_URL
     axios.post(
       `${SERVER}/oauth/kakao`,
       { accessToken }, // 카카오 토큰
@@ -125,9 +122,7 @@ export const useLoginApi = () => {
   // * double check ok
   // ! dot env check point 
   const handleUserLoginApi = async ({ email, password }) => {
-    // console.log("login ajax call here now ")
-    const SERVER = process.env.REACT_APP_SERVER_URL 
-    // || 'http://localhost:80'
+    const SERVER = process.env.REACT_APP_SERVER_URL
     axios.post(
       SERVER + "/users/signin",
       // `${process.env.REACT_APP_SERVER_URL}/users/signin`,
@@ -170,8 +165,8 @@ export const useLoginApi = () => {
       setErrorMessage('비밀번호를 입력해 주세요')
     }
     //! 6자리 이상 으로 교체
-    else if(password.length < 3){
-      setErrorMessage('3자리 이상 비밀번호를 입력해 주세요')
+    else if(password.length < 6){
+      setErrorMessage('6자리 이상 비밀번호를 입력해 주세요')
     }
     else{
       setActive("-active") // button active
