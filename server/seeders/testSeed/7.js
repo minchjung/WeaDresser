@@ -1,7 +1,7 @@
 'use strict';
-const { Diarie, sequelize, User, Like, Hashtag, DiariesHashtag  } = require('../models')
+const { Diarie, sequelize, User, Like, Hashtag, DiariesHashtag  } = require('../../models')
 const { Op } = require('sequelize');
-const users = require('../controllers/mypage/users');
+const users = require('../../controllers/mypage/users');
 module.exports = {
   up: async (queryInterface, Sequelize) => {
 

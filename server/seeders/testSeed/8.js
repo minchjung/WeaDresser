@@ -1,5 +1,5 @@
 'use strict';
-const { Diarie, sequelize, User, Like, Hashtag, DiariesHashtag  } = require('../models')
+const { Diarie, sequelize, User, Like, Hashtag, DiariesHashtag  } = require('../../models')
 const { Op } = require('sequelize')
 module.exports = {
   up: async (queryInterface, Sequelize) => {

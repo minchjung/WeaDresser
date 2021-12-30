@@ -1,21 +1,18 @@
 'use strict';
-const { Diarie, sequelize, User, Like, Hashtag  } = require('../models')
+const { Diarie, Hashtag  } = require('../models');
+const { hashLen, diaryLen, maxHash } = require('./const');
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     
     const getRandomNumber = (min, max) => Math.floor(Math.random() * max) + min + 1 
     const getRandomHashtags = async (ids) => {
       const hashtags = await Hashtag.findAll({ where : { id: ids }})  
-      // console.log(hashtags)
       return hashtags
     }
     
-    const hashLen = 30
-    const diaryLen = 343;
-
-    for(let d = 1 ; d < (hashLen*diaryLen)/2; d++){
+    for(let d = 1 ; d < diaryLen; d++){
       let checkDiary = new Array(diaryLen + 1).fill(false);
-      const randHashLen = getRandomNumber(0, 20);
+      const randHashLen = getRandomNumber(0, maxHash);
       checkDiary[0] = true ;
       let hashArr = []
       for(let i = 1 ; i < randHashLen ; i++ ){
@@ -37,12 +34,8 @@ module.exports = {
     //  return queryInterface.bulkInsert('Hashtags', hashtag)
   },
   down: async (queryInterface, Sequelize) => {
-    /**
-    // await diary.addHashtags(hashtags, { through : DiariesHashtag , ignoreDuplicates : true})
-     * await queryInterface.bulkDelete('People', null, {});
-     */
     // await queryInterface.bulkDelete('Users', null, {})
-    return queryInterface.bulkDelete('Hashtags', null, {})
+    return queryInterface.bulkDelete('DiariesHashtags', null, {})
 
   }
 };
