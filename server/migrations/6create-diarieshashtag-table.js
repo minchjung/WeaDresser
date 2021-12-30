@@ -5,20 +5,20 @@ module.exports = {
     return  queryInterface.createTable('DiariesHashtags', {
       diarieId :{
         type : DataTypes.INTEGER,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
         references:{
           model : 'Diaries',
           key : 'id',
-          onDelete: 'CASCADE',
-          onUpdate: 'CASCADE',
         },
       },
       hashtagId :{
         type : DataTypes.INTEGER,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
         references:{
           model : 'Hashtags',
           key : 'id',
-          onDelete: 'CASCADE',
-          onUpdate: 'CASCADE',
         },
       }
     })
