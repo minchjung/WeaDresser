@@ -1,5 +1,6 @@
 'use strict';
-const { Diarie, sequelize, User, Like  } = require('../models')
+const { Diarie, Like  } = require('../models')
+const { userLen, diaryLen } = require('./const')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     // * When user add likes on diary-post
@@ -9,15 +10,7 @@ module.exports = {
       const diary = await Diarie.findByPk(diaryId)
       await diary.increment(['likeCounts'], {by : 1})
     }
-
-    const check1 = async (diaryId, userId) => {
-      const foundDiary = await Diarie.findByPk(diaryId);
-      const likeCount = await foundDiary.getLikes();
-      console.log("diarieId =", diaryId, "like 갯수=", likeCount.length)
-    }
     
-    const userLen = 30;
-    const diaryLen = 343;
     let checkArr = new Array(userLen+1).fill(0).map( _ => new Array(diaryLen+1).fill(false))
     checkArr[0][0] = true;
     for(let i = 1 ; i < 2*(userLen*diaryLen/5); i++ ){ // like data len = 500
