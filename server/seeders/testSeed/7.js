@@ -6,15 +6,14 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
 
     // const like = await Like.findAll({ where : {  userId : 11 } })
-    const user = await User.findByPk(11)
+    const user = await User.findByPk(1)
     await user.destroy();    
     // await user.removeLikes(like)
     // await user.save();
   },
   down: async (queryInterface, Sequelize) => {
     // where : { 
-    //   userId : foundUser.id,
-    //   createdAt : { [Op.like] : curDate } 
+    //   userId : foundUser.id,    //   createdAt : { [Op.like] : curDate } 
     // }, 
     // include : { 
     //   model : Hashtag, 

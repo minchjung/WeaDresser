@@ -22,11 +22,11 @@ module.exports = {
 =======
         type: DataTypes.INTEGER,
         //   allowNull: false,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
           references:{
             model : 'Users',
             key : 'id',
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
           },
 >>>>>>> b828c8c (merge after)
       },
