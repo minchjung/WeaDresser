@@ -15,36 +15,13 @@
 
 <hr />
 
-<h2>Team</h2>
+### DB 스키마 
+![Untitled](https://user-images.githubusercontent.com/75051059/146734851-a5fd5986-134a-4264-bc06-ced9ccf695ce.png)
 
-팀 소개
-<table>
-   <thead>
-      <tr>
-         <th>역할</th>
-         <th>이름</th>
-         <th>담당분야</th>
-         <th>Github 주소</th>
-      </tr>
-   </thead>
-   <tbody>
-      <tr>
-         <td>팀장</td>
-         <td>이윤환</td>
-         <td>FULL</td>
-         <td>https://github.com/leeyhunhwan</td>
-      </tr>
-      <tr>
-         <td>팀원</td>
-         <td>설동혁</td>
-         <td>FULL</td>
-         <td>https://github.com/iamsirseol</td>
-      </tr>
-      <tr>
-         <td>팀원</td>
-         <td>정민찬</td>
-         <td>FULL</td>
-         <td>https://github.com/minchjung</td>
-      </tr>
-   </tbody>
-</table
+### System Architectur
+![My First Board - Frame 1](https://user-images.githubusercontent.com/78589751/146806982-e99725bf-c36f-4e61-8688-fd089724843d.jpg)
+
+
+
+
+
