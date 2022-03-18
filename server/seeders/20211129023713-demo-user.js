@@ -2,19 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
     let checkArr = new Array(11).fill(false);
-    // [0,1,2,3,4,5,6,7,8,9,10] ;;
-    // 1~10;
-    // [0, true, ]
     let uData = new Array(10).fill(0).map( (ele, idx) =>{
       let ranNum = parseInt(Math.random()*10 + 1);
       let shareBool;
@@ -74,43 +62,10 @@ module.exports = {
       queryInterface.bulkInsert('Diaries', Ddata);
       return queryInterface.bulkInsert('Likes', Ldata);
     }
-      
-      
-      // const Ddata = uData.map( (user,idx) => {
-      //   let ranUser = parseInt(Math.random()*10+1)
-      //   let obj = 
-      //   {
-      //     id : idx+1,
-      //     image:"image " + user.userName + ranUser,
-      //     content:"content " +  + user.userName + ranUser,
-      //     weather:"맑음",
-      //     temp: 10.0,
-      //     tempMax: 12.0,
-      //     tempMin: 0.1, 
-      //     userId: ranUser,
-      //     share:false,
-      //   }
-      //   let ranDiary = parseInt(Math.random()*5+1)
-      //   let obj2 =
-      //   {
-      //     id : idx +1, 
-      //     userId : ranUser, 
-      //     diariesId : ranDiary 
-      //   }
-      //   Ldata[idx]=obj2;
-      //   return obj
-      // });
-  
-
   },
 
   down: async (queryInterface, Sequelize) => {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+
     queryInterface.bulkDelete('Users', null, {});
     return queryInterface.bulkDelete('Diaries', null, {});
   }
