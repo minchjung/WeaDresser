@@ -91,16 +91,12 @@ module.exports = {
     const userInfo = isAuthorized(req);
     const { diariesId, like} = req.body;
     const validUser = await isValid(userInfo.email, userInfo.id);
-    console.log("---------------------------")
-    console.log(req.body);
-    console.log("---------------------------")
     if (!diariesId) {
       return res.status(400).send("Bad Request");
     }
     if (!validUser) {
       return res.status(401).json({ message: "unauthorized" });
     }
-    console.log(validUser.dataValues.id);
     if(like === true){
       await Like.create({
         userId: validUser.dataValues.id,
