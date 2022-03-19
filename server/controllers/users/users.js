@@ -31,7 +31,6 @@ module.exports = {
 
   // *  POST users/signin
   signin: async (req, res) => {
-    console.log("로긴 한다~~~~~~~~~~~~~~")
     // req.body validation
     if (!req.body.email || !req.body.password)
       return res.status(422).send("Insufficient parameters");
@@ -65,7 +64,6 @@ module.exports = {
   signup: async (req, res) => {
     // req body validation
     const { email, password, userName, social, gender } = req.body;
-    console.log(email, password, userName, social, gender)
     if (!email || !password || !userName || !gender)
       return res.status(422).send("Insufficient parameters");
 
@@ -89,8 +87,6 @@ module.exports = {
 
   // *  POST users/signout
   signout: (req, res) => {
-    // console.log("its comming now")
-
     // res.clearCookie('Bearer', { domain: "localhost" });
     res.clearCookie("Bearer", {
       secure: true,
