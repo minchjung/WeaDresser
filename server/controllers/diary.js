@@ -3,24 +3,6 @@ const { Diarie, Hashtag, DiariesHashtag, sequelize } = require('../models')
 module.exports = {
   // * POST  /diary 
   create : async (req, res) => {
-<<<<<<< HEAD
-<<<<<<< HEAD
-    // // token validation
-=======
-    // token validation
->>>>>>> 24a12b7 (Fix: landing page server payload, and patch diary)
-    const result = isAuthorized(req); 
-    if(!result) return res.status(401).send("Unauthorized");
-
-    // user validation 
-    const foundUser = await isValid(result.email, result.id);
-    if(!foundUser) return res.status(401).send("Unauthorized");
-
-    // req.body validation 
-    const{ content,image, weather, tempMin, tempMax, temp, hashtag , share } = req.body;
-<<<<<<< HEAD
-    if(!weather || !tempMin|| !tempMax || !image,
-=======
     // token validation
     const result = isAuthorized(req); 
     if(!result) return res.status(401).send("Unauthorized");
@@ -29,39 +11,30 @@ module.exports = {
     const foundUser = await isValid(result.email, result.id);
     if(!foundUser) return res.status(401).send("Unauthorized");
 
-    
+    // token validation
+    const result = isAuthorized(req); 
+    if(!result) return res.status(401).send("Unauthorized");
+
+    // user validation 
+    const foundUser = await isValid(result.email, result.id);
+    if(!foundUser) return res.status(401).send("Unauthorized");
+
     // req.body validation 
     const{ userId, content, weather, image, tempMin, tempMax, temp, hashtag , share } = req.body;
-    console.log({ content, weather, image, tempMin, tempMax, temp, hashtag , share }, 'body@@@')
-    if( !content || !weather || 
-      !tempMin|| !tempMax || !temp ||  
->>>>>>> 9d6f215 (before merge)
-=======
     if(!weather || !tempMin|| !tempMax || !image, !req.file.location ||
->>>>>>> 24a12b7 (Fix: landing page server payload, and patch diary)
       share === undefined || share === null || share === ''){
         return res.status(400).send("Bad request")
     }
 
     // Make hashtag array with name properties 
-<<<<<<< HEAD
     const hashArr = hashtag.split(', ').filter(ele => ele !== "" )
     const tagData = hashArr.map( ele => { return { name : ele } })
     
     req.body.userId = foundUser.id;
     req.body.image = req.file.location
 
-<<<<<<< HEAD
-    // console.log("hashtag =============",hashtag)
-    // console.log("hashtag =============",hashArr)
-    // console.log("hashtag =============",tagData)
-    // console.log("req.body ===========", req.body)
-=======
     let hashArr = hashtag || [] ;
     const tagData = hashArr.split(', ').map( ele => { return { name : ele } })
->>>>>>> 9d6f215 (before merge)
-=======
->>>>>>> 24a12b7 (Fix: landing page server payload, and patch diary)
     const data = req.body;
     delete data.hashtag 
 
