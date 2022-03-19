@@ -5,18 +5,13 @@ const { findTopLikeById, findLatestById, findRandomOne, findTopLikeOne } = requi
 module.exports = {
   // * GET  /?tempMin={}&tempMax={}
   findRandom : async (req, res) => {
-    console.log("====================================================여기가 endpoint 1")
     const { tempMin, tempMax } = req.query;
     try{
       await sequelize.transaction( async t => { 
         // find random diary 
         const RanOne = await Diarie.findOne({
           where : { 
-<<<<<<< HEAD
-            temp : { [Op.between] : [ tempMin -5, tempMax + 5 ] },
-=======
             temp : { [Op.between] : [ tempMin -10, tempMax + 10 ] },
->>>>>>> 255394d ( Fixed : server landing home page idary data logic all changed by sequelize)
             share : true,
           },
           include : [ 
@@ -32,10 +27,6 @@ module.exports = {
         let ranData = RanOne.dataValues
         const hashtag = ranData.Hashtags.map(hash => hash.dataValues.name).join(', ')
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 255394d ( Fixed : server landing home page idary data logic all changed by sequelize)
         ranData.hashtag = hashtag
         ranData.userName = ranData.User.dataValues.userName
         delete ranData.Hashtags
@@ -44,11 +35,7 @@ module.exports = {
         // get Most like diary with username
         const TopOne = await Diarie.findOne({
           where : { 
-<<<<<<< HEAD
-            temp : { [Op.between] : [ tempMin -5, tempMax + 5 ] },
-=======
             temp : { [Op.between] : [ tempMin -10, tempMax + 10 ] },
->>>>>>> 255394d ( Fixed : server landing home page idary data logic all changed by sequelize)
             share : true,
           },
           include : [ 
@@ -66,11 +53,7 @@ module.exports = {
         topData.userName = topData.User.dataValues.userName
         delete topData.Hashtags
         delete topData.User
-
-        console.log('endpoint1=======================',ranData, topData)
         return res.json([ranData, topData])
-<<<<<<< HEAD
-=======
     const randomQuery = findRandomOne(tempMin, tempMax);
     const topQuery = findTopLikeOne(tempMin, tempMax);
    
@@ -92,9 +75,6 @@ module.exports = {
           : res.status(404).json([ null, null ]) 
           //! DB no data (미리 넣을거라 가능성 희박) BUT 협의
         }
->>>>>>> f3e3020 (Fixed: query diariesId, hastagsId => 단수)
-=======
->>>>>>> 255394d ( Fixed : server landing home page idary data logic all changed by sequelize)
       })
     }
     catch(err) { 
@@ -106,10 +86,8 @@ module.exports = {
 
   // * GET  /?tempMax={}&tempMin={}  
   findById : async (req, res) => {
-    console.log("====================================================여기가 endpoint 2")
     // validation 
     const { tempMax, tempMin }= req.query
-    console.log('======================================================',tempMax, tempMin)
     const userInfo = isAuthorized(req);
     const validUser = await isValid(userInfo.email, userInfo.id);
     if(!validUser){
@@ -120,11 +98,7 @@ module.exports = {
         // get Most like diary with username
         const TopOne = await Diarie.findOne({
           where : { 
-<<<<<<< HEAD
-            temp : { [Op.between] : [ tempMin -5, tempMax + 5 ] },
-=======
             temp : { [Op.between] : [ tempMin -10, tempMax + 10 ] },
->>>>>>> 255394d ( Fixed : server landing home page idary data logic all changed by sequelize)
             share : true,
           },
           include : [ 
@@ -139,20 +113,8 @@ module.exports = {
         // like condition for current user on found diary                
         let topData = TopOne.dataValues
         topData.hashtag = topData.Hashtags.map(hash => hash.dataValues.name).join(', ')
-<<<<<<< HEAD
         topData.likeWhether = await Like.findOne({ where : 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        topData.likeWether = await Like.findOne({ where : 
->>>>>>> 255394d ( Fixed : server landing home page idary data logic all changed by sequelize)
           { diarieId : TopOne.id, userId : userId},
-=======
-          { diarieId : TopOne.id },
->>>>>>> b9cb256 (FIX : home landing server bug on left response)
-=======
-          { diarieId : TopOne.id },
->>>>>>> cab08ae ([task] deploy)
           transaction : t
         }) ? 1 : 0 
 
@@ -166,26 +128,9 @@ module.exports = {
         const userId = validUser.id
         const UserOne = await Diarie.findOne({
           where : {
-<<<<<<< HEAD
-<<<<<<< HEAD
             id : userId, 
-<<<<<<< HEAD
-<<<<<<< HEAD
-            temp : { [Op.between] : [ tempMin -5, tempMax + 5 ] },
-=======
             temp : { [Op.between] : [ tempMin -10, tempMax + 10 ] },
->>>>>>> 255394d ( Fixed : server landing home page idary data logic all changed by sequelize)
-=======
-            temp : { [Op.gte] : tempMin -30 },
->>>>>>> 19e8a8d (before to clear for cl)
-=======
             userId : userId, 
-            temp : { [Op.between] : [ tempMin -5, tempMax + 5] },
->>>>>>> b9cb256 (FIX : home landing server bug on left response)
-=======
-            userId : userId, 
-            temp : { [Op.between] : [ tempMin -5, tempMax + 5] },
->>>>>>> cab08ae ([task] deploy)
             share : true,
           },
           include : [ 
@@ -197,21 +142,12 @@ module.exports = {
           nest : true,
           transaction : t
         })
-<<<<<<< HEAD
-=======
-        // console.log("dsafadfasdfasdfasdf=================================================================")              
->>>>>>> cab08ae ([task] deploy)
-
         // if user has diary on that condition where temperature in between tempMin, Max
         if(UserOne){ 
         // like condition for current user on found diary  
           userData = UserOne.dataValues
           userData.hashtag = userData.Hashtags.map(hash => hash.dataValues.name).join(', ')
-<<<<<<< HEAD
           userData.likeWhether = await Like.findOne({ where : 
-=======
-          userData.likeWether = await Like.findOne({ where : 
->>>>>>> 255394d ( Fixed : server landing home page idary data logic all changed by sequelize)
             { diarieId : UserOne.id, userId : userId},
             transaction : t
           }) ? 1 : 0 
@@ -221,19 +157,7 @@ module.exports = {
         // find random diary 
           const RanOne = await Diarie.findOne({
             where : { 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-              temp : { [Op.between] : [ tempMin -5, tempMax + 5 ] },
-=======
               temp : { [Op.between] : [ tempMin -10, tempMax + 10 ] },
->>>>>>> 255394d ( Fixed : server landing home page idary data logic all changed by sequelize)
-=======
-              temp : { [Op.between] : [ tempMin -200, tempMax + 200 ] },
->>>>>>> 19e8a8d (before to clear for cl)
-=======
-              temp : { [Op.between] : [ tempMin -5, tempMax + 5 ] },
->>>>>>> b9cb256 (FIX : home landing server bug on left response)
               share : true,
             },
             include : [ 
@@ -247,11 +171,7 @@ module.exports = {
           })
           // like condition for current user on found diary                
           userData = RanOne.dataValues
-<<<<<<< HEAD
           userData.likeWhether = await Like.findOne({ where : { 
-=======
-          userData.likeWether = await Like.findOne({ where : { 
->>>>>>> 255394d ( Fixed : server landing home page idary data logic all changed by sequelize)
             diarieId : RanOne.id, userId : userId
           },
           transaction : t
@@ -263,12 +183,6 @@ module.exports = {
         userData.userName = userData.User.dataValues.userName
         delete userData.Hashtags
         delete userData.User
-        
-<<<<<<< HEAD
-=======
-        // console.log(topData)
-        console.log('endpoint2=======================',userData, topData)
->>>>>>> cab08ae ([task] deploy)
         return res.json([userData, topData])
       })
     }
