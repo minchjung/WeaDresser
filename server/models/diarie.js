@@ -56,14 +56,5 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Diarie',
   });
 
-  // // !!! 별칭 처리 하기 위해서 이부분 과 User model 의 association을 같이 설정 해줘야 한다 
-  // Diarie.associate = (models) => {
-  //   Diarie.belongsTo(models.User, {
-  //     // onDelete : 'cascade',
-  //     as: 'U',
-  //     foreignKey : 'userId'
-  //   })
-  // }
-
   return Diarie;
 };
