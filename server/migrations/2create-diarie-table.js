@@ -16,10 +16,6 @@ module.exports = {
         type: DataTypes.STRING,
       },
       userId : {
-<<<<<<< HEAD
-        // allowNull: false,
-        type: DataTypes.INTEGER,
-=======
         type: DataTypes.INTEGER,
         //   allowNull: false,
         onDelete: 'CASCADE',
@@ -28,7 +24,6 @@ module.exports = {
             model : 'Users',
             key : 'id',
           },
->>>>>>> b828c8c (merge after)
       },
       weather: {
         allowNull: false,
