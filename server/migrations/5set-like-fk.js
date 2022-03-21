@@ -2,12 +2,6 @@
 
 module.exports = {
   up: async (queryInterface, DataTypes) => {
-    // field 추가
-<<<<<<< HEAD
-=======
-    // await queryInterface.addColumn('Likes', 'userId', DataTypes.INTEGER);
-    // await queryInterface.addColumn('Likes', 'diarieId', DataTypes.INTEGER);
->>>>>>> b2eb2a6 (before getting pair merge)
 
     // foreign key 연결
     await queryInterface.addConstraint('Likes', {
@@ -38,10 +32,5 @@ module.exports = {
   down: async (queryInterface, DataTypes) => {
     await queryInterface.removeConstraint('Likes', 'userId');
     await queryInterface.removeConstraint('Likes', 'diarieId');
-<<<<<<< HEAD
-=======
-    // await queryInterface.removeColumn('Likes', 'like-userId');
-    // await queryInterface.removeColumn('Likes', 'like-diarieId');
->>>>>>> b2eb2a6 (before getting pair merge)
   }
 };
