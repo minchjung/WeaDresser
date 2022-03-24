@@ -16,8 +16,6 @@ module.exports = {
     }).catch((err) => {
       console.log(err);
     });
-    //console.log(userInfo);
-
     res.status(200).send({ data: { userName: userInfo.userName, social: userInfo.social } });
   },
   // * PATCH mypage/users
@@ -37,26 +35,13 @@ module.exports = {
     }).catch((err) => {
       console.log(err);
     });
-    // if (checkUserPassword) {
-    //   if (accessToken.id !== checkUserPassword.id) {
-    //     return res.status(400).send("password id already exitst");
-    //   }
-    // }
     let result;
     if (!checkUserPassword) {
       return res.status(401).send("not authorized");
     }
     if (userName && !editPassword) {
-<<<<<<< HEAD
       result = await User.update({
         userName: userName,
-=======
-      // console.log(userName)
-      result = await User.update({userName: userName},{
-        where: {
-          email: accessTokenData.email,
-        }
->>>>>>> 491efa4 (Fixed : Sign,in,up,out = server url, redirect-url, changed)
       }).catch((err) => {
         console.log(err);
       });
@@ -80,33 +65,6 @@ module.exports = {
   // * DELETE  mypage/users 회원탈퇴
   delete: async (req, res) => {
     const accessTokenData = isAuthorized(req);
-<<<<<<< HEAD
-    if (!accessTokenData)  return res.status(401).send("not authorized");
-    try{
-      await sequelize.transaction( async t => { 
-        const user = await User.findByPk(accessTokenData.id, { transaction : t });
-        await user.removeDiaries(await user.getDiaries({ transaction : t }));
-        await user.removeLikes(await user.getLikes({ transaction : t }));
-        await user.destroy({ transaction : t });
-
-        res
-        .clearCookie("Bearer", {
-          httpOnly: true,
-          sameSite: "none",
-          secure: true,
-          path: "/",
-          domain: "weadresser.ml",
-        })
-        .status(200)
-        .send("ok");
-      })
-    }
-    catch(err){
-      console.log(err)
-      return res.status(500).send("Internal server error")       
-    }
-=======
-    // console.log(accessTokenData);
     if (!accessTokenData) {
       return res.status(401).send("not authorized");
     }
@@ -128,6 +86,5 @@ module.exports = {
     }).catch((err) => {
       console.log(err);
     });
->>>>>>> cab08ae ([task] deploy)
   },
 };
