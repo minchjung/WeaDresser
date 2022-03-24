@@ -105,26 +105,11 @@ module.exports = {
     // user validation 
     const foundUser = await isValid(token.email, token.id);
     if(!foundUser) return res.status(401).send("Unauthorized");
-<<<<<<< HEAD
-<<<<<<< HEAD
-    console.log('======================', req.body)
-    //! req.body validation 협의 
-<<<<<<< HEAD
-<<<<<<< HEAD
     // const hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
     let { diaryId, content, share, hashtag, image } = req.body;
     if(!diaryId || !content || !req.body.location) return res.status(400).send("Bad request")
-=======
-=======
->>>>>>> 24a12b7 (Fix: landing page server payload, and patch diary)
-   
-    // console.log("=========", req.body)
-    // console.log("=========", req.file)
     // req.body validation 
     const { diaryId, content, share } = req.body;
-<<<<<<< HEAD
-    if(!diaryId) return res.status(400).send("Bad request")
->>>>>>> 62ccd36 ([modify] sidebar 일부 수정, edit요청 수정)
     if( share === null  || share === undefined ) return res.status(400).send("Bad request")
 
     // data setting to bulkInsert
@@ -139,34 +124,19 @@ module.exports = {
     }
     data.content = req.body.content || "";
 
-    // console.log(req.body)
 
-=======
     req.body.image = req.file.location
     const hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
     const { diaryId, content, image, share, } = req.body;
     if(!diaryId || !content || !image) return res.status(400).send("Bad request")
     if( share === null  || share === undefined ) return res.status(400).send("Bad request")
     
->>>>>>> 6bc04a4 (delete : myapge2)
-=======
-    // const hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(',');
-    const { diaryId, content, share, hashtag, image } = req.body;
-    if(!diaryId || !content || !req.body.location) return res.status(400).send("Bad request")
-=======
-    if(!diaryId || !req.file) return res.status(400).send("Bad request")
->>>>>>> 24a12b7 (Fix: landing page server payload, and patch diary)
-    if( share === null  || share === undefined ) return res.status(400).send("Bad request")
-
     // data setting to bulkInsert
     let data = req.body 
     data.hashtag = req.body.hashtag === "" ? [] :  req.body.hashtag.split(','); 
     data.image = req.file.location
     data.content = req.body.content || ""
 
-    // console.log(req.body)
-
->>>>>>> 2fc6ffe (Fix:  mypage/diary-patch image when null giving 400 bad req)
     // transaction start
     try{ // find diary => 
       await sequelize.transaction( async t => { 
