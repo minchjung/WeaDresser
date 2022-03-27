@@ -33,28 +33,16 @@ export const useLoading = () => {
   }, [dispatch])
 
   const logoutHandler = async () => {
-<<<<<<< HEAD
-    const SERVER = process.env.REACT_APP_SERVER_URL 
-    await axios.post(SERVER + "/users/signout")
-=======
     const SERVER = process.env.REACT_APP_SERVER_URL
     await axios.post(SERVER + "/users/signout", {}, {withCredentials: true})
->>>>>>> cab08ae ([task] deploy)
       .then( result => {
         dispatch(loginSuccessHandler(false, ""))
         sessionStorage.removeItem('isLogin')
-        // history.push('/')
-        //! url 변경은 되나 컴포넌트가 ladning page로 가지 않음 ! 
-<<<<<<< HEAD
-        window.location.assign('https://www.weadresser.ml/') // <- 강제 home 
-=======
         window.location.assign('https://www.weadresser.ml') // <- 강제 home 
->>>>>>> cab08ae ([task] deploy)
       })
       .catch( err => {
         console.log(err) // err handler
       })
-    // history.push('/')
   }
 
   return { 
